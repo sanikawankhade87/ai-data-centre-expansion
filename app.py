@@ -28,9 +28,10 @@ PERSONA = (
 )
 # Filled in once Tab 4 is finished: one or two plain-language sentences.
 ANSWER = (
-    "Partly. From 2023 to late 2025, the share of US firms using AI grew as fast as data centre "
-    "construction spending. Since November 2025, construction spending has grown clearly faster "
-    "than AI use, so the newest wave of building is running ahead of measured demand (Tab 4)."
+    "Partly. From 2023 to late 2025, the share of US firms using AI grew at least as fast as "
+    "data centre construction spending. Since November 2025, construction spending has grown "
+    "clearly faster than AI use, so the newest wave of building is running ahead of measured "
+    "demand. That recent gap covers only nine months of data (Tab 4)."
 )
 
 TABS = [
