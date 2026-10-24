@@ -155,12 +155,15 @@ def load_dates() -> pd.DataFrame:
     i_code = header.index("smpdt")
     i_start = next(i for i, h in enumerate(header) if h.startswith("reference period start") or h == "ref start")
     i_end = next(i for i, h in enumerate(header) if h.startswith("ref end"))
+    i_pub = next((i for i, h in enumerate(header) if h.startswith("publication")), None)
     out = []
     for r_num, row in enumerate(rows[1:], start=2):
         code = _period_code(row[i_code]) if i_code < len(row) else None
         if code and row[i_end] is not None:
             out.append({"period": code, "ref_start": _excel_date(row[i_start]),
-                        "ref_end": _excel_date(row[i_end]), "dates_row": r_num})
+                        "ref_end": _excel_date(row[i_end]), "dates_row": r_num,
+                        "published": (_excel_date(row[i_pub]) if i_pub is not None and i_pub < len(row)
+                                      and row[i_pub] not in (None, "") else pd.NaT)})
     return pd.DataFrame(out)
 
 
@@ -263,8 +266,9 @@ def panel(w: dict, y_max: float, show_legend: bool) -> alt.LayerChart:
         spend_b=df["spend"] / 1e9,
     )[["month", "idx_supply", "idx_demand", "spend_b", "ai"]]
 
-    x = alt.X("month:T", title=None,
-              axis=alt.Axis(format="%b %y", labelFontSize=13, grid=False, labelAngle=0, tickCount=6))
+    x = alt.X("month:T", title="Month",
+              axis=alt.Axis(format="%b %y", labelFontSize=13, titleFontSize=13, grid=False, labelAngle=0,
+                            tickCount=6))
     y = alt.Y("index:Q", title="Index (first month of window = 100)",
               scale=alt.Scale(domain=[0, y_max]),
               axis=alt.Axis(labelFontSize=13, titleFontSize=13, tickCount=6))
@@ -325,9 +329,68 @@ def build_chart(windows: list[dict]) -> alt.HConcatChart:
             .configure_title(color="#2E2622"))
 
 
+def build_gap_chart(windows: list[dict]) -> alt.HConcatChart:
+    """Deviation chart: AI use index minus build index, month by month.
+
+    Above zero, AI use has grown more than construction since the window
+    started; below zero, building has grown more. Every bar carries its value
+    so it can be read without hovering.
+    """
+    gaps = [w["df"].assign(gap=w["df"]["idx_demand"] - w["df"]["idx_supply"]) for w in windows]
+    lo = min(g["gap"].min() for g in gaps)
+    hi = max(g["gap"].max() for g in gaps)
+    pad = max(8.0, (hi - lo) * 0.15)
+    domain = [math.floor(min(lo, 0) - pad), math.ceil(max(hi, 0) + pad)]
+    total = sum(w["months"] for w in windows)
+    panels = []
+    for w, g in zip(windows, gaps):
+        g = g.assign(side=g["gap"].map(lambda v: "AI use ahead" if v >= 0 else "Building ahead"),
+                     label=g["gap"].map(lambda v: f"{v:+.0f}"))
+        x = alt.X("month:T", title="Month",
+                  axis=alt.Axis(format="%b %y", labelFontSize=12, titleFontSize=13, grid=False, labelAngle=0,
+                                tickCount=6))
+        y = alt.Y("gap:Q", title="AI use index − build index (points)", scale=alt.Scale(domain=domain),
+                  axis=alt.Axis(labelFontSize=12, titleFontSize=13, tickCount=5))
+        color = alt.Color("side:N", title=None,
+                          scale=alt.Scale(domain=["AI use ahead", "Building ahead"],
+                                          range=[DEMAND_COLOR, SUPPLY_COLOR]),
+                          legend=alt.Legend(orient="top", labelFontSize=13))
+        pw = max(220, int(820 * w["months"] / total))
+        bars = alt.Chart(g).mark_bar(cornerRadius=2, size=max(4, int(pw / max(len(g), 1) * 0.7))).encode(
+            x=x, y=y, color=color,
+            tooltip=[alt.Tooltip("month:T", title="Month", format="%B %Y"),
+                     alt.Tooltip("gap:Q", title="Gap (index points)", format="+.1f")],
+        )
+        text = alt.Chart(g).encode(x="month:T", y="gap:Q", text="label:N")
+        labels = (text.transform_filter("datum.gap >= 0").mark_text(fontSize=10, color="#4A3A30", dy=-7)
+                  + text.transform_filter("datum.gap < 0").mark_text(fontSize=10, color="#4A3A30", dy=8))
+        zero = alt.Chart(pd.DataFrame({"gap": [0]})).mark_rule(color=MUTED, strokeWidth=1).encode(y="gap:Q")
+        panels.append(alt.layer(zero, bars, labels).properties(
+            title=alt.Title(window_title(w), fontSize=13, anchor="start"),
+            width=pw, height=230))
+    return (alt.hconcat(*panels, spacing=36).resolve_scale(y="shared", color="shared")
+            .configure_view(strokeWidth=0).configure(background="transparent")
+            .configure_title(color="#2E2622"))
+
+
 # ---------------------------------------------------------------------------
 # Page
 # ---------------------------------------------------------------------------
+
+def refresh_text(dates: pd.DataFrame, spend: pd.DataFrame) -> str:
+    b = load_btos("now")
+    have = [p for p, v in b["raw"].items() if not math.isnan(_pct(v))]
+    latest = max(have)
+    row = dates[dates["period"] == latest]
+    pub = row["published"].iloc[0] if len(row) and pd.notna(row["published"].iloc[0]) else None
+    ref = row["ref_end"].iloc[0] if len(row) else None
+    btos = f"BTOS survey period {latest}"
+    if ref is not None:
+        btos += f" (reference period ending {ref:%d %b %Y}"
+        btos += f", published {pub:%d %b %Y})" if pub is not None else ")"
+    return (f"{btos}; construction spending to {spend['month'].max():%B %Y}. "
+            f"Files downloaded 23 Oct 2026.")
+
 
 CSS = """
 <style>
@@ -415,6 +478,15 @@ def render() -> None:
             "are never joined."
         )
 
+    # --- Gap chart (deviation) ------------------------------------------------
+    with st.container(border=True):
+        st.markdown("**How far apart are the two lines each month?** Bars above zero mean AI use has grown "
+                    "more than construction since the start of the window; bars below zero mean building "
+                    "has grown more.")
+        st.altair_chart(build_gap_chart(windows), width="stretch")
+        st.caption("Gap = AI use index minus construction index, in index points, for the months picked "
+                   "with the sliders above. Each bar is labelled with its value.")
+
     # --- What it means --------------------------------------------------------
     o_head, _ = verdict(old["ratio"])
     n_head, n_text = verdict(now["ratio"])
@@ -422,7 +494,9 @@ def render() -> None:
         f"**What this means for Dana:** from {mlabel(old['base']['month'])} to {mlabel(old['end']['month'])}, "
         f"the share of US firms using AI went from {old['base']['ai']:.2f}% to {old['end']['ai']:.2f}% "
         f"(index {old['demand_end']:.0f}) while construction spending reached index {old['supply_end']:.0f} "
-        f"({o_head.lower().replace("ai use", "AI use")}). Under the revised question, from {mlabel(now['base']['month'])} "
+        f"({o_head.lower().replace("ai use", "AI use")}). The lead changed hands along the way: building was "
+        f"ahead in {int((old['df']['idx_demand'] < old['df']['idx_supply']).sum())} of {len(old['df']) - 1} "
+        f"months after the start (see the gap chart). Under the revised question, from {mlabel(now['base']['month'])} "
         f"to {mlabel(now['end']['month'])}, AI use reached index {now['demand_end']:.0f} and construction "
         f"spending reached {now['supply_end']:.0f}. "
         f"In yearly terms that is {annualised(now['demand_end'], now['months']):.0f}% growth in AI use "
@@ -508,6 +582,7 @@ def render() -> None:
         f"([{BTOS_URL}]({BTOS_URL})). AI use = estimated share of employer businesses answering “Yes” to "
         f"using AI in the last two weeks."
     )
+    st.caption(f"**Data last refreshed:** {refresh_text(dates, spend)}")
 
 
 def trace(w: dict, dates: pd.DataFrame) -> None:
