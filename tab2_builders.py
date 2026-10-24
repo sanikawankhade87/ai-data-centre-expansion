@@ -36,7 +36,6 @@ def render() -> None:
     operational = df[df["operational"]]
 
     # ---------- Header ----------
-    st.caption("Tab 2 of 4 · Supply side")
     st.header("Builders and Locations")
     st.markdown(
         "**Is AI data centre capacity concentrated in a few organisations or countries?**  \n"
