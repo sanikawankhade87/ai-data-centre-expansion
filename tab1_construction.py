@@ -6,23 +6,27 @@ and is the growth accelerating?
 Data: US Census Bureau Value of Construction Put in Place (private data centre
 construction), adjusted to constant 2021 US$ with BLS producer price indexes,
 processed and published by Our World in Data. The CSV in data/ is kept exactly
-as downloaded; every cleaning step is below.
+as downloaded; every transformation is in src/tab1_prep.py.
 """
 
+import sys
 from pathlib import Path
 
 import altair as alt
 import pandas as pd
 import streamlit as st
 
-DATA_FILE = Path(__file__).parent / "data" / "monthly-spending-data-center-us.csv"
-SOURCE_URL = "https://ourworldindata.org/grapher/monthly-spending-data-center-us"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from src import tab1_prep as prep  # noqa: E402  (every transformation lives in src/tab1_prep.py)
+
+DATA_FILE = prep.RAW_FILE
+SOURCE_URL = prep.SOURCE_URL
 SOURCE_TEXT = (
     "US Census Bureau (2026); US Bureau of Labor Statistics (2026), "
     "with major processing by Our World in Data"
 )
 
-CHATGPT = pd.Timestamp("2022-11-01")  # ChatGPT was released on 30 Nov 2022
+CHATGPT = prep.CHATGPT
 HIGHLIGHT = "#C46A10"       # warm amber: the 12-month average Dana should read
 CONTEXT = "#A79E97"         # soft warm grey: raw monthly values
 HIGHLIGHT_TEXT = "#A85A0C"  # darker versions for text, readable in a screen recording
@@ -39,24 +43,9 @@ NEON_CSS = """
 
 
 @st.cache_data
-def load_data(path: Path = DATA_FILE) -> tuple[pd.DataFrame, str, str]:
-    """Read the raw OWID file and return (tidy table, month column, value column).
-
-    Steps: keep the United States rows, turn the month text into a date,
-    express spending in billions of US$, and add a 12-month rolling average.
-    """
-    raw = pd.read_csv(path)
-    cols = {c.lower(): c for c in raw.columns}
-    entity = cols["entity"]
-    month_col = cols.get("month") or cols.get("day") or cols.get("year")
-    value_col = [c for c in raw.columns if c.lower() not in ("entity", "code", month_col.lower())][0]
-    df = raw[raw[entity] == "United States"].copy()
-    df["month"] = pd.to_datetime(df[month_col])
-    df["spend"] = df[value_col].astype(float)
-    df = df.sort_values("month").reset_index(drop=True)[["month", "spend"]]
-    df["spend_b"] = df["spend"] / 1e9
-    df["avg12_b"] = df["spend_b"].rolling(12).mean()  # mean of this month and the 11 before it
-    return df, month_col, value_col
+def load_data() -> pd.DataFrame:
+    """Steps 1 and 2 from src/tab1_prep.py: read the raw file, one row per month."""
+    return prep.monthly(prep.load_raw())
 
 
 def build_chart(df: pd.DataFrame, show_avg: bool) -> alt.LayerChart:
@@ -131,16 +120,14 @@ def render() -> None:
         st.error(f"Missing source file: `data/{DATA_FILE.name}`. Download it from {SOURCE_URL}.")
         return
 
-    df, month_col, value_col = load_data()
-    latest = df.iloc[-1]
-    year_ago = df[df["month"] == latest["month"] - pd.DateOffset(years=1)].iloc[0]
-    two_ago = df[df["month"] == latest["month"] - pd.DateOffset(years=2)].iloc[0]
-    pre_ai = df[df["month"] == CHATGPT].iloc[0]
-
-    same_month_growth = (latest["spend"] / year_ago["spend"] - 1) * 100
-    avg_growth_now = (latest["avg12_b"] / year_ago["avg12_b"] - 1) * 100
-    avg_growth_before = (year_ago["avg12_b"] / two_ago["avg12_b"] - 1) * 100
-    since_ai = latest["avg12_b"] / pre_ai["avg12_b"]
+    df = load_data()
+    month_col, value_col = prep.MONTH_COL, prep.VALUE_COL
+    c = prep.cards(df)  # step 3 in src/tab1_prep.py
+    latest, year_ago, two_ago, pre_ai = c["latest"], c["year_ago"], c["two_ago"], c["pre_ai"]
+    same_month_growth = c["same_month_growth_pct"]
+    avg_growth_now = c["avg_growth_pct"]
+    avg_growth_before = c["avg_growth_prev_pct"]
+    since_ai = c["since_chatgpt_x"]
     m = lambda d: d.strftime("%b %Y")
 
     # --- Summary cards -------------------------------------------------------
