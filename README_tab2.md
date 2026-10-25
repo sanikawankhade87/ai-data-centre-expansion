@@ -2,7 +2,7 @@
 
 **Owner:** Erkebai (Eric) Bakhavadinov
 **Sub-question:** Is AI data centre capacity concentrated in a few organisations or countries?
-**Persona:** Dana Ortiz, network planning analyst at a US electricity utility.
+**Persona:** Dana Reyes, energy policy analyst (the group persona, as on the front page).
 
 ## Files
 
@@ -26,7 +26,7 @@ If `data/raw/data_centers.csv` is missing, the app downloads it from Epoch AI on
 ## Data
 
 Epoch AI, *AI data centers*, https://epoch.ai/data/data_centers/data_centers.csv (CC BY).
-One row per site, 94 rows as of the 19 Oct 2026 release. Columns used: `Name`, `Owner`, `Country`, `Current power (MW)`.
+One row per site: 95 rows in the copy committed here (downloaded 24 Oct 2026). Columns used: `Name`, `Owner`, `Country`, `Current power (MW)`.
 
 - `Current power (MW)` is **IT power**, the power drawn by servers, networking and storage. It excludes cooling, so a site's grid draw is higher.
 - `Owner` means the **owner of the AI chips**, not the building. Epoch tags each owner `#confident`, `#likely` or `#speculative`; the page strips the tag for grouping and reports the counts in "Source and method".
@@ -56,5 +56,5 @@ The **Group by** toggle switches between Owner and Country. The **top N** slider
 
 | What | Tool | How I checked it |
 |---|---|---|
-| Drafted the page code and the prep module | Claude (Anthropic) | Recomputed the headline % by hand from the raw CSV in Excel; confirmed the row count (94) and that tag stripping left no `#` in Owner |
+| Drafted the page code and the prep module | Claude (Anthropic) | Recomputed the headline % by hand from the raw CSV in Excel; confirmed the row count (95) and that tag stripping left no `#` in Owner |
 | _add your own entries_ | | |
