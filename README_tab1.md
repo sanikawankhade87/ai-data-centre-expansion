@@ -8,15 +8,21 @@
 
 | File | Purpose |
 |---|---|
-| `tab1_construction.py` | The tab. `app.py` imports it and calls `render()` inside the first tab. All loading and transformation steps are in `load_data()`, with comments |
-| `data/monthly-spending-data-center-us.csv` | Raw Our World in Data download (never edited by hand). Shared with Tabs 3 and 4 so all tabs show the same numbers |
+| `tab1_construction.py` | The tab. `app.py` imports it and calls `render()` inside the first tab |
+| `src/tab1_prep.py` | Every transformation, in four commented steps, plus seven checks that can fail |
+| `scripts/download_tab1.py` | Downloads a fresh, unedited copy from Our World in Data to `data/raw/tab1/` and compares it with the shared file |
+| `data/monthly-spending-data-center-us.csv` | Raw OWID download (never edited by hand). Shared with Tabs 3 and 4 so all tabs show the same numbers |
+| `data/processed/tab1_monthly.csv` | Processed file written by `src/tab1_prep.py`: monthly spending in US$ billions and the 12-month average |
+| `data/DATA_DICTIONARY_tab1.md` | Every column, unit, formula and check |
 
 ## Run it
 
 ```bash
 pip install -r requirements.txt
-streamlit run app.py                 # Tab 1 is the first tab
-streamlit run tab1_construction.py   # or preview Tab 1 on its own
+python -m src.tab1_prep               # rebuild the processed file and run the checks
+python -m src.tab1_prep --validate    # checks only
+streamlit run app.py                  # Tab 1 is the first tab
+streamlit run tab1_construction.py    # or preview Tab 1 on its own
 ```
 
 ## Data
@@ -40,7 +46,7 @@ https://ourworldindata.org/grapher/monthly-spending-data-center-us
 
 ## Transformations
 
-All steps are in `load_data()` in `tab1_construction.py`. No rows are dropped and no values are imputed.
+All steps are in `src/tab1_prep.py`. No rows are dropped and no values are imputed. Full column-by-column detail is in `data/DATA_DICTIONARY_tab1.md`.
 
 | Step | What it does |
 |---|---|
