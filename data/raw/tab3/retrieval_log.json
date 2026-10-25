@@ -1,0 +1,30 @@
+{
+  "retrieved": "2026-10-25",
+  "files": {
+    "owid_dc_share.csv": {
+      "url": "https://ourworldindata.org/grapher/data-centers-share-electricity-demand.csv?v=1&csvType=full&useColumnShortNames=false",
+      "bytes": 1493,
+      "md5": "240cd9d9897e03920129d6284a4681f3"
+    },
+    "owid_dc_share.metadata.json": {
+      "url": "https://ourworldindata.org/grapher/data-centers-share-electricity-demand.metadata.json?v=1&csvType=full&useColumnShortNames=false",
+      "bytes": 3345,
+      "md5": "c14320d1544d93fa0821989d0d984b9e"
+    },
+    "owid_electricity_demand.csv": {
+      "url": "https://ourworldindata.org/grapher/electricity-demand.csv?v=1&csvType=full&useColumnShortNames=false",
+      "bytes": 161196,
+      "md5": "b36d310ba73127130ecca58894cf338a"
+    },
+    "owid_electricity_demand.metadata.json": {
+      "url": "https://ourworldindata.org/grapher/electricity-demand.metadata.json?v=1&csvType=full&useColumnShortNames=false",
+      "bytes": 1298,
+      "md5": "da9925241b3ae1d08eda8f630123552b"
+    },
+    "epoch_data_center_timelines.csv": {
+      "url": "https://epoch.ai/data/data_centers/data_center_timelines.csv",
+      "bytes": 191508,
+      "md5": "be5827e0c0f21a58ddfffbc29f32e93f"
+    }
+  }
+}

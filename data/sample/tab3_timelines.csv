@@ -1,0 +1,568 @@
+Data center,Date,IT power (MW),Power (MW)
+Colossus 2,2025-02-28,0.0,0.0
+Colossus 2,2025-09-08,0.0,0.0
+Colossus 2,2025-10-19,239.0,323.0
+Colossus 2,2026-01-13,239.0,323.0
+Colossus 2,2026-04-06,490.0,661.0
+Colossus 2,2026-06-15,946.0,1276.0
+Colossus 2,2027-02-25,1531.0,2065.0
+Anthropic-Amazon New Carlisle,2024-02-09,0.0,0.0
+Anthropic-Amazon New Carlisle,2024-06-10,0.0,0.0
+Anthropic-Amazon New Carlisle,2025-05-10,0.0,0.0
+Anthropic-Amazon New Carlisle,2025-06-23,398.0,478.0
+Anthropic-Amazon New Carlisle,2025-09-26,398.0,478.0
+Anthropic-Amazon New Carlisle,2025-10-17,398.0,478.0
+Anthropic-Amazon New Carlisle,2025-12-23,626.0,751.0
+Anthropic-Amazon New Carlisle,2026-02-09,626.0,751.0
+Anthropic-Amazon New Carlisle,2026-03-23,910.0,1092.0
+Anthropic-Amazon New Carlisle,2026-06-03,910.0,1092.0
+Anthropic-Amazon New Carlisle,2026-10-19,1037.0,1244.0
+Anthropic-Amazon New Carlisle,2028-03-17,1925.0,2310.0
+Microsoft Fairwater Atlanta,2023-04-09,0.0,0.0
+Microsoft Fairwater Atlanta,2025-10-14,321.0,433.0
+Microsoft Fairwater Atlanta,2026-02-13,321.0,433.0
+Microsoft Fairwater Atlanta,2026-05-15,321.0,433.0
+Microsoft Fairwater Atlanta,2026-06-14,636.0,859.0
+Google Pryor (North),2024-07-19,53.0,63.0
+Google Pryor (North),2025-01-28,53.0,63.0
+Google Pryor (North),2025-10-19,53.0,63.0
+Google Pryor (North),2026-05-26,53.0,63.0
+Google Pryor (North),2026-09-06,368.0,442.0
+DayOne Nusajaya,2023-10-01,0.0,0.0
+DayOne Nusajaya,2024-12-31,50.0,70.0
+DayOne Nusajaya,2026-01-22,240.0,336.0
+DayOne Nusajaya,2026-04-05,240.0,336.0
+DayOne Nusajaya,2026-10-02,473.0,662.0
+Meta Prometheus,2022-04-14,0.0,0.0
+Meta Prometheus,2025-06-01,0.0,0.0
+Meta Prometheus,2025-09-20,0.0,0.0
+Meta Prometheus,2025-10-14,76.0,99.0
+Meta Prometheus,2026-01-18,368.0,478.0
+Meta Prometheus,2026-03-12,368.0,478.0
+Meta Prometheus,2026-05-18,368.0,478.0
+Meta Prometheus,2026-08-31,471.0,612.0
+Meta Prometheus,2026-11-30,676.0,878.0
+Meta Prometheus,2027-01-15,740.0,962.0
+Meta Prometheus,2027-04-15,804.0,1045.0
+Meta Prometheus,2027-07-14,868.0,1128.0
+Meta Prometheus,2028-07-01,1022.0,1328.0
+OpenAI Stargate Abilene,2024-05-31,0.0,0.0
+OpenAI Stargate Abilene,2025-06-28,0.0,0.0
+OpenAI Stargate Abilene,2025-09-26,105.0,147.0
+OpenAI Stargate Abilene,2025-12-24,211.0,295.0
+OpenAI Stargate Abilene,2026-01-15,211.0,295.0
+OpenAI Stargate Abilene,2026-03-24,211.0,295.0
+OpenAI Stargate Abilene,2026-05-23,421.0,590.0
+OpenAI Stargate Abilene,2026-07-28,421.0,590.0
+OpenAI Stargate Abilene,2026-11-01,843.0,1180.0
+DayOne Kempas,2023-11-11,0.0,0.0
+DayOne Kempas,2025-09-15,0.0,0.0
+DayOne Kempas,2026-01-22,80.197707,112.2767898
+DayOne Kempas,2026-06-01,223.248528,312.5479392
+DayOne Kempas,2026-08-10,223.248528,312.5479392
+DayOne Kempas,2026-09-01,322.470096,451.4581344
+DayOne Kempas,2026-10-01,421.691664,590.3683296
+Microsoft Fairwater Wisconsin,2023-07-14,0.0,0.0
+Microsoft Fairwater Wisconsin,2025-09-26,0.0,0.0
+Microsoft Fairwater Wisconsin,2026-01-28,0.0,0.0
+Microsoft Fairwater Wisconsin,2026-04-16,369.0,442.0
+Microsoft Fairwater Wisconsin,2026-05-15,369.0,442.0
+Microsoft Fairwater Wisconsin,2027-02-20,737.0,885.0
+Microsoft Fairwater Wisconsin,2028-05-13,2263.0,2715.0
+Google Columbus,2021-10-01,0.0,0.0
+Google Columbus,2023-07-01,0.0,0.0
+Google Columbus,2024-04-01,65.0,78.0
+Google Columbus,2025-03-01,130.0,156.0
+Google Columbus,2025-10-01,216.0,260.0
+Google Columbus,2026-02-21,216.0,260.0
+Google Columbus,2026-05-01,303.0,364.0
+Google Columbus,2026-08-05,303.0,364.0
+Google Columbus,2027-07-01,386.0,464.0
+Google New Albany,2024-04-20,67.0,80.0
+Google New Albany,2024-09-13,144.0,173.0
+Google New Albany,2025-06-01,222.0,267.0
+Google New Albany,2025-10-14,333.0,400.0
+Google New Albany,2026-01-18,333.0,400.0
+Google New Albany,2026-03-12,333.0,400.0
+Google New Albany,2026-05-18,333.0,400.0
+Google Mesa,2023-07-01,0.0,0.0
+Google Mesa,2025-07-01,90.0,126.0
+Google Mesa,2025-09-07,90.0,126.0
+Google Mesa,2026-05-15,90.0,126.0
+Google Mesa,2026-08-15,183.0,237.0
+Colossus 1,2024-04-24,0.0,0.0
+Colossus 1,2024-08-11,35.0,45.0
+Colossus 1,2024-09-02,139.0,181.0
+Colossus 1,2025-02-17,278.0,361.0
+Colossus 1,2025-03-06,278.0,361.0
+Colossus 1,2025-07-22,340.0,442.0
+Colossus 1,2025-09-17,268.0,348.0
+Colossus 1,2025-10-19,268.0,348.0
+Colossus 1,2025-11-07,340.0,442.0
+Colossus 1,2026-02-11,340.0,425.0
+Colossus 1,2026-05-06,340.0,425.0
+Colossus 1,2026-06-01,340.0,425.0
+Colossus 1,2026-06-15,340.0,425.0
+Google Council Bluffs (East),2022-09-06,0.0,0.0
+Google Council Bluffs (East),2024-11-19,79.0,95.0
+Google Council Bluffs (East),2025-06-15,158.0,190.0
+Google Council Bluffs (East),2025-07-19,158.0,190.0
+Google Council Bluffs (East),2026-01-11,158.0,190.0
+Google Council Bluffs (East),2026-07-07,237.0,284.0
+CoreWeave Denton TX,2024-11-01,0.0,0.0
+CoreWeave Denton TX,2025-05-31,8.0,11.0
+CoreWeave Denton TX,2025-12-31,67.0,94.0
+CoreWeave Denton TX,2026-02-23,131.0,183.0
+CoreWeave Denton TX,2026-03-02,131.0,183.0
+CoreWeave Denton TX,2026-07-03,262.0,367.0
+CoreWeave Denton TX,2026-09-01,262.0,367.0
+CoreWeave Denton TX,2027-05-31,282.0,395.0
+QTS Richmond 1,2023-10-01,0.0,0.0
+QTS Richmond 1,2023-11-02,0.0,0.0
+QTS Richmond 1,2024-01-29,47.0,66.0
+QTS Richmond 1,2024-06-23,94.0,132.0
+QTS Richmond 1,2025-02-04,142.0,199.0
+QTS Richmond 1,2025-06-03,190.0,266.0
+QTS Richmond 1,2025-11-19,238.0,333.0
+QTS Richmond 1,2025-12-31,238.0,333.0
+QTS Richmond 1,2026-02-13,238.0,333.0
+Bridge Data Centres MY06,2021-10-01,0.0,0.0
+Bridge Data Centres MY06,2022-12-31,19.0,25.0
+Bridge Data Centres MY06,2023-03-01,19.0,25.0
+Bridge Data Centres MY06,2023-05-30,61.0,79.0
+Bridge Data Centres MY06,2024-11-05,114.0,148.0
+Bridge Data Centres MY06,2025-02-09,114.0,148.0
+Bridge Data Centres MY06,2025-05-25,243.0,315.0
+Bridge Data Centres MY06,2025-09-23,243.0,315.0
+Bridge Data Centres MY06,2026-03-03,243.0,315.0
+Bridge Data Centres MY06,2026-09-13,243.0,315.0
+Meta Rosemount,2024-05-01,0.0,0.0
+Meta Rosemount,2026-03-21,0.0,0.0
+Meta Rosemount,2026-06-19,178.0,241.0
+Amazon Madison Mega Site,2023-10-02,0.0,0.0
+Amazon Madison Mega Site,2025-03-11,0.0,0.0
+Amazon Madison Mega Site,2025-06-23,284.0,341.0
+Amazon Madison Mega Site,2025-10-04,284.0,341.0
+Amazon Madison Mega Site,2026-06-04,284.0,341.0
+Amazon Madison Mega Site,2027-03-01,284.0,478.0
+Amazon Madison Mega Site,2028-03-15,683.0,819.0
+Google Bristow,2021-07-01,0.0,0.0
+Google Bristow,2024-04-29,87.0,104.0
+Google Bristow,2025-04-29,174.0,208.0
+Google Bristow,2026-05-20,238.0,286.0
+Microsoft Goodyear,2021-06-21,0.0,0.0
+Microsoft Goodyear,2023-04-24,40.0,53.0
+Microsoft Goodyear,2025-01-16,81.0,105.0
+Microsoft Goodyear,2025-09-01,202.0,263.0
+Microsoft Goodyear,2025-11-12,202.0,263.0
+Microsoft Goodyear,2026-04-27,202.0,263.0
+Meta Jeffersonville,2024-02-01,0.0,0.0
+Meta Jeffersonville,2026-03-06,0.0,0.0
+Meta Jeffersonville,2026-06-04,178.0,241.0
+Google Kansas City East,2024-01-01,0.0,0.0
+Google Kansas City East,2024-03-01,0.0,0.0
+Google Kansas City East,2024-10-01,0.0,0.0
+Google Kansas City East,2025-07-01,0.0,0.0
+Google Kansas City East,2025-11-01,0.0,0.0
+Google Kansas City East,2026-04-16,0.0,0.0
+Google Kansas City East,2026-08-01,105.0,126.0
+Meta Temple,2022-04-01,0.0,0.0
+Meta Temple,2023-02-05,0.0,0.0
+Meta Temple,2023-04-01,0.0,0.0
+Meta Temple,2025-11-15,0.0,0.0
+Meta Temple,2025-12-09,152.0,198.0
+Meta Temple,2026-02-24,152.0,198.0
+Meta Temple,2026-09-30,178.0,231.0
+AWS New Albany,2022-07-01,0.0,0.0
+AWS New Albany,2024-12-01,113.0,136.0
+AWS New Albany,2026-03-12,213.0,255.0
+AWS New Albany,2026-05-18,213.0,255.0
+AWS New Albany,2027-07-01,338.0,405.0
+Google Omaha,2021-11-25,0.0,0.0
+Google Omaha,2024-04-08,79.0,95.0
+Google Omaha,2024-07-29,79.0,95.0
+Google Omaha,2024-11-19,158.0,189.0
+Google Omaha,2025-03-16,158.0,189.0
+Google Omaha,2025-04-21,158.0,189.0
+Google Omaha,2025-10-21,158.0,189.0
+Google Omaha,2026-05-15,158.0,189.0
+Google Omaha,2026-06-30,237.0,284.0
+Google Omaha,2028-01-23,316.0,379.0
+Google Omaha,2028-07-23,395.0,474.0
+Google Lincoln,2023-07-01,0.0,0.0
+Google Lincoln,2025-10-23,0.0,0.0
+Google Lincoln,2026-05-12,141.0,170.0
+Google Lincoln,2027-10-01,283.0,339.0
+QTS Richmond 2,2022-04-01,0.0,0.0
+QTS Richmond 2,2024-01-29,0.0,0.0
+QTS Richmond 2,2024-06-23,0.0,0.0
+QTS Richmond 2,2025-02-04,72.0,101.0
+QTS Richmond 2,2025-11-19,72.0,101.0
+QTS Richmond 2,2025-12-31,144.0,202.0
+QTS Richmond 2,2026-02-13,144.0,202.0
+QTS Richmond 2,2026-05-14,180.0,252.0
+Google The Dalles,2023-05-21,0.0,0.0
+Google The Dalles,2025-03-07,77.0,93.0
+Google The Dalles,2026-04-29,154.0,185.0
+QTS Richmond 3,2024-04-01,0.0,0.0
+QTS Richmond 3,2025-02-04,0.0,0.0
+QTS Richmond 3,2025-11-19,0.0,0.0
+QTS Richmond 3,2025-12-31,0.0,0.0
+QTS Richmond 3,2026-02-13,48.0,67.0
+QTS Richmond 3,2026-05-14,144.0,202.0
+QTS Richmond 3,2027-02-13,240.0,336.0
+Meta Montgomery,2024-03-01,0.0,0.0
+Meta Montgomery,2025-07-04,0.0,0.0
+Meta Montgomery,2026-03-20,0.0,0.0
+Meta Montgomery,2026-06-18,153.0,199.0
+Meta Montgomery,2027-02-02,204.0,266.0
+Meta Montgomery,2027-02-23,358.0,465.0
+Meta Kuna,2022-07-01,0.0,0.0
+Meta Kuna,2026-03-15,0.0,0.0
+Meta Kuna,2026-06-01,152.0,198.0
+Meta Cheyenne,2024-04-01,0.0,0.0
+Meta Cheyenne,2025-01-30,0.0,0.0
+Meta Cheyenne,2026-03-22,0.0,0.0
+Meta Cheyenne,2026-07-25,152.0,182.0
+Meta Cheyenne,2027-02-15,207.0,249.0
+Amazon Ridgeland,2024-02-24,0.0,0.0
+Amazon Ridgeland,2025-10-04,0.0,0.0
+Amazon Ridgeland,2026-05-15,228.0,273.0
+Amazon Ridgeland,2027-02-09,284.0,341.0
+Amazon Ridgeland,2028-09-29,840.0,1008.0
+Meta Huntsville,2021-12-13,0.0,0.0
+Meta Huntsville,2025-03-03,0.0,0.0
+Meta Huntsville,2025-11-04,0.0,0.0
+Meta Huntsville,2026-02-02,0.0,0.0
+Meta Huntsville,2026-03-04,78.0,105.0
+Meta Huntsville,2026-06-02,146.0,198.0
+Coreweave Helios,2025-05-31,0.0,0.0
+Coreweave Helios,2025-08-27,0.0,0.0
+Coreweave Helios,2026-04-04,0.0,0.0
+Coreweave Helios,2026-06-17,0.0,0.0
+Coreweave Helios,2026-08-30,132.0,200.0
+Coreweave Helios,2028-01-01,396.0,600.0
+Coreweave Helios,2029-01-01,528.0,800.0
+Microsoft Project Osmium,2018-12-18,0.0,0.0
+Microsoft Project Osmium,2021-01-01,48.0,57.0
+Microsoft Project Osmium,2023-06-30,95.0,114.0
+Microsoft Project Osmium,2025-03-01,190.0,228.0
+Microsoft Project Osmium,2025-10-08,190.0,228.0
+Microsoft Project Osmium,2026-06-16,190.0,228.0
+Meta Eagle Mountain,2023-10-01,0.0,0.0
+Meta Eagle Mountain,2025-09-08,0.0,0.0
+Meta Eagle Mountain,2025-12-07,133.0,179.0
+Meta Eagle Mountain,2026-05-02,133.0,179.0
+Google Midlothian,2023-11-28,0.0,0.0
+Google Midlothian,2024-10-01,0.0,0.0
+Google Midlothian,2026-04-19,69.0,82.0
+Google Midlothian,2026-07-01,103.0,123.0
+Google Storey County,2023-08-30,81.0,107.0
+Google Storey County,2025-03-11,81.0,107.0
+Google Storey County,2025-06-30,161.0,214.0
+Google Storey County,2025-09-28,161.0,214.0
+Google Storey County,2026-04-13,161.0,214.0
+Google Storey County,2027-06-30,300.0,389.0
+Google Lancaster,2021-10-01,0.0,0.0
+Google Lancaster,2024-01-01,68.0,82.0
+Google Lancaster,2025-09-11,68.0,82.0
+Google Lancaster,2025-10-31,137.0,164.0
+Google Lancaster,2026-03-12,137.0,164.0
+Meta-QTS Hillsboro 2,2021-04-01,0.0,0.0
+Meta-QTS Hillsboro 2,2023-04-29,0.0,0.0
+Meta-QTS Hillsboro 2,2023-08-02,45.0,61.0
+Meta-QTS Hillsboro 2,2024-11-08,180.0,243.0
+Meta-QTS Hillsboro 2,2025-04-14,180.0,243.0
+Meta-QTS Hillsboro 2,2026-04-17,180.0,243.0
+Google Waltham Cross,2024-01-01,0.0,0.0
+Google Waltham Cross,2025-09-01,88.0,124.0
+Google Waltham Cross,2026-04-23,88.0,124.0
+VNET Bayin Ulanqab,2024-03-15,0.0,0.0
+VNET Bayin Ulanqab,2025-02-05,0.0,0.0
+VNET Bayin Ulanqab,2025-07-01,38.0,43.0
+VNET Bayin Ulanqab,2025-08-01,38.0,43.0
+VNET Bayin Ulanqab,2025-11-01,171.0,194.0
+VNET Bayin Ulanqab,2025-12-01,221.0,252.0
+VNET Bayin Ulanqab,2026-03-05,221.0,252.0
+VNET Bayin Ulanqab,2026-05-06,221.0,252.0
+VNET Bayin Ulanqab,2027-09-01,700.0,798.0
+Google Arcola,2024-10-01,0.0,0.0
+Google Arcola,2025-09-08,0.0,0.0
+Google Arcola,2026-04-09,0.0,0.0
+Google Arcola,2026-06-16,77.0,93.0
+Google Red Oak,2023-04-30,0.0,0.0
+Google Red Oak,2025-08-25,77.0,93.0
+Google Red Oak,2026-02-06,77.0,93.0
+Google Red Oak,2026-12-01,154.0,185.0
+Google Papillion,2020-03-04,0.0,0.0
+Google Papillion,2022-10-16,0.0,0.0
+Google Papillion,2023-01-23,79.0,95.0
+Google Papillion,2024-02-15,79.0,95.0
+Google Papillion,2024-08-03,237.0,284.0
+Google Papillion,2025-11-03,237.0,284.0
+Google Papillion,2026-05-04,237.0,284.0
+Meta Gallatin,2023-09-11,0.0,0.0
+Meta Gallatin,2026-02-09,0.0,0.0
+Meta Gallatin,2026-08-24,87.0,114.0
+Meta Los Lunas,2024-07-24,0.0,0.0
+Meta Los Lunas,2026-03-01,87.0,114.0
+Meta Los Lunas,2026-07-28,87.0,114.0
+Meta Los Lunas,2026-10-26,118.0,147.0
+Meta Los Lunas,2028-01-01,218.0,273.0
+CoreWeave Ellendale ND,2023-10-31,0.0,0.0
+CoreWeave Ellendale ND,2025-05-28,0.0,0.0
+CoreWeave Ellendale ND,2025-08-29,0.0,0.0
+CoreWeave Ellendale ND,2025-10-27,50.0,65.0
+CoreWeave Ellendale ND,2025-11-24,68.0,88.0
+CoreWeave Ellendale ND,2026-03-27,68.0,88.0
+CoreWeave Ellendale ND,2026-06-30,68.0,88.0
+CoreWeave Ellendale ND,2026-12-31,88.0,114.0
+CoreWeave Ellendale ND,2027-06-01,400.0,520.0
+Meta Sarpy,2024-08-01,0.0,0.0
+Meta Sarpy,2026-05-04,0.0,0.0
+Meta Sarpy,2026-08-02,80.0,105.0
+Huawei Horinger,2023-10-08,0.0,0.0
+Huawei Horinger,2025-02-24,0.0,0.0
+Huawei Horinger,2025-04-01,0.0,0.0
+Huawei Horinger,2025-06-01,36.1,41.5
+Huawei Horinger,2025-07-01,74.0,85.1
+Huawei Horinger,2026-02-01,113.6,130.6
+Huawei Horinger,2026-03-05,113.6,130.6
+Huawei Horinger,2026-05-12,113.6,130.6
+Huawei Horinger,2026-06-07,113.6,130.6
+Huawei Horinger,2026-07-01,184.3,212.0
+Huawei Horinger,2026-08-18,184.3,212.0
+Huawei Horinger,2028-02-14,346.4,414.6
+CoreWeave Chester VA,2023-09-18,0.0,0.0
+CoreWeave Chester VA,2024-01-31,18.0,25.0
+CoreWeave Chester VA,2024-04-30,27.0,38.0
+CoreWeave Chester VA,2025-01-22,27.0,38.0
+CoreWeave Chester VA,2026-05-20,82.0,114.0
+CoreWeave Chester VA,2027-06-30,113.0,197.0
+Oracle Batam,2022-07-01,0.0,0.0
+Oracle Batam,2025-05-15,33.0,43.0
+Oracle Batam,2025-06-13,33.0,43.0
+Oracle Batam,2025-10-01,33.0,43.0
+Oracle Batam,2026-03-19,33.0,43.0
+Oracle Batam,2026-04-17,72.0,94.0
+Oracle Batam,2026-05-06,72.0,94.0
+AWS Berwick,2021-07-01,0.0,0.0
+AWS Berwick,2023-01-17,0.0,0.0
+AWS Berwick,2024-03-04,0.0,0.0
+AWS Berwick,2024-06-01,0.0,0.0
+AWS Berwick,2025-09-09,47.0,66.0
+AWS Berwick,2026-01-07,77.0,102.0
+AWS Berwick,2026-03-12,77.0,102.0
+AWS Berwick,2026-05-05,77.0,102.0
+AWS Berwick,2026-08-01,108.0,139.0
+AWS Berwick,2027-08-01,169.0,212.0
+CoreWeave Marble NC,2024-06-25,0.0,0.0
+CoreWeave Marble NC,2026-03-13,36.0,50.4
+CoreWeave Marble NC,2026-04-17,36.0,50.4
+CoreWeave Marble NC,2026-05-06,65.0,91.0
+Meta Aiken,2024-05-30,0.0,0.0
+Meta Aiken,2026-04-08,0.0,0.0
+Meta Aiken,2026-08-07,69.0,90.0
+Meta Aiken,2026-11-05,129.0,168.0
+Huawei Wuhu,2023-01-01,0.0,0.0
+Huawei Wuhu,2025-01-01,45.0,51.0
+Huawei Wuhu,2025-03-01,119.0,137.0
+Huawei Wuhu,2025-11-01,157.0,181.0
+Huawei Wuhu,2026-01-24,157.0,181.0
+Huawei Wuhu,2026-06-01,157.0,181.0
+Huawei Wuhu,2026-08-06,157.0,181.0
+Huawei Wuhu,2026-11-01,199.0,229.0
+Huawei Wuhu,2026-12-31,364.0,419.0
+Huawei Wuhu,2027-12-01,457.0,526.0
+Core42 Lake Mariner,2024-10-01,0.0,0.0
+Core42 Lake Mariner,2025-10-01,16.0,19.0
+Core42 Lake Mariner,2026-03-02,16.0,19.0
+Core42 Lake Mariner,2026-03-31,58.0,58.0
+Core42 Lake Mariner,2026-07-23,58.0,58.0
+Microsoft SAT40,2018-12-28,0.0,0.0
+Microsoft SAT40,2024-05-24,47.0,66.0
+Microsoft SAT40,2025-12-01,75.0,106.0
+Microsoft SAT40,2026-02-04,75.0,106.0
+STACK Infrastructure NVA02,2019-10-19,0.0,0.0
+STACK Infrastructure NVA02,2024-10-01,85.0,118.0
+STACK Infrastructure NVA02,2026-02-14,85.0,118.0
+STACK Infrastructure NVA02,2028-01-01,348.0,487.0
+Anthropic Lake Mariner,2025-06-11,0.0,0.0
+Anthropic Lake Mariner,2026-03-02,0.0,0.0
+Anthropic Lake Mariner,2026-05-31,42.0,49.0
+Anthropic Lake Mariner,2026-07-23,42.0,49.0
+Anthropic Lake Mariner,2026-10-31,210.0,245.0
+Anthropic Lake Mariner,2027-03-31,378.0,441.0
+Microsoft-Nebius New Jersey,2024-05-31,0.0,0.0
+Microsoft-Nebius New Jersey,2025-12-15,0.0,0.0
+Microsoft-Nebius New Jersey,2026-04-15,50.0,70.0
+Microsoft-Nebius New Jersey,2026-07-12,50.0,70.0
+CoreWeave Norway,2024-01-23,0.0,0.0
+CoreWeave Norway,2025-07-27,42.0,55.0
+CoreWeave Norway,2026-04-25,42.0,55.0
+CoreWeave Norway,2026-08-15,42.0,55.0
+Nebius Mantsala,2024-10-08,40.0,48.0
+Nebius Mantsala,2025-11-14,40.0,48.0
+Nebius Mantsala,2026-03-31,75.0,90.0
+Nebius Mantsala,2026-06-29,75.0,90.0
+Nebius Mantsala,2027-12-31,145.0,196.0
+Southgate Melbourne,2022-12-26,0.0,0.0
+Southgate Melbourne,2025-10-28,0.0,0.0
+Southgate Melbourne,2026-05-11,0.0,0.0
+Southgate Melbourne,2026-08-09,41.0,57.0
+Stream Phoenix,2022-10-30,0.0,0.0
+Stream Phoenix,2026-01-31,0.0,0.0
+Stream Phoenix,2026-05-01,64.0,77.0
+Stream Phoenix,2030-01-01,220.0,267.0
+Microsoft SAT14,2022-02-18,0.0,0.0
+Microsoft SAT14,2024-07-01,19.0,26.0
+Microsoft SAT14,2025-08-03,19.0,26.0
+Microsoft SAT14,2026-02-28,19.0,26.0
+Microsoft SAT14,2026-03-31,47.0,66.0
+Vantage TX1,2023-12-15,0.0,0.0
+Vantage TX1,2026-02-15,32.0,44.8
+Vantage TX1,2027-08-31,128.0,179.2
+CoreWeave Dalton 1 & 2,2024-06-03,0.0,0.0
+CoreWeave Dalton 1 & 2,2025-05-01,0.0,0.0
+CoreWeave Dalton 1 & 2,2025-08-29,0.0,0.0
+CoreWeave Dalton 1 & 2,2026-02-20,28.0,40.0
+Alibaba Zhangbei,2024-07-23,0.0,0.0
+Alibaba Zhangbei,2025-09-17,85.0,102.0
+Alibaba Zhangbei,2025-12-23,85.0,102.0
+Alibaba Zhangbei,2026-01-03,169.0,203.0
+Start Campus Sines Data Campus,2022-01-01,0.0,0.0
+Start Campus Sines Data Campus,2024-10-31,0.0,0.0
+Start Campus Sines Data Campus,2026-04-03,33.0,40.0
+Start Campus Sines Data Campus,2026-08-16,33.0,40.0
+Start Campus Sines Data Campus,2027-09-30,233.0,280.0
+xAI QTS Atlanta,2024-01-23,0.0,0.0
+xAI QTS Atlanta,2025-02-20,17.32971,24.0
+xAI QTS Atlanta,2025-08-21,17.32971,24.0
+xAI QTS Atlanta,2026-07-10,17.32971,24.0
+Nscale Keflavik,2022-07-08,0.0,0.0
+Nscale Keflavik,2023-05-01,0.0,0.0
+Nscale Keflavik,2026-01-23,0.0,0.0
+Nscale Keflavik,2026-04-23,5.11,6.64
+Nscale Keflavik,2026-06-30,5.11,6.64
+Nscale Keflavik,2026-07-27,5.11,6.64
+Nscale Keflavik,2026-12-31,10.21,13.28
+Anthropic Barber Lake,2025-09-18,0.0,0.0
+Anthropic Barber Lake,2025-11-29,0.0,0.0
+Anthropic Barber Lake,2026-07-30,0.0,0.0
+Anthropic Barber Lake,2026-12-30,168.0,244.0
+Anthropic Barber Lake,2027-04-30,207.0,300.0
+CoreWeave Lancaster Greenfield site,2025-07-15,0.0,0.0
+CoreWeave Lancaster Greenfield site,2026-07-13,0.0,0.0
+CoreWeave Lancaster Greenfield site,2027-06-30,92.0,124.0
+CoreWeave Muskogee OK,2024-11-18,0.0,0.0
+CoreWeave Muskogee OK,2026-04-09,0.0,0.0
+CoreWeave Muskogee OK,2026-06-13,0.0,0.0
+CoreWeave Muskogee OK,2026-12-31,70.0,98.0
+CoreWeave Muskogee OK,2027-12-31,153.0,181.0
+Crusoe Abilene Expansion,2025-11-02,0.0,0.0
+Crusoe Abilene Expansion,2026-01-15,0.0,0.0
+Crusoe Abilene Expansion,2027-09-17,336.0,470.0
+Crusoe Abilene Expansion,2027-11-11,672.0,941.0
+EcoDataCenter 2,2025-09-01,0.0,0.0
+EcoDataCenter 2,2026-05-09,0.0,0.0
+EcoDataCenter 2,2026-08-17,0.0,0.0
+EcoDataCenter 2,2027-06-30,24.0,34.0
+EcoDataCenter 2,2028-06-30,48.0,67.0
+Envision Galaxy Ulanqab,2025-08-01,0.0,0.0
+Envision Galaxy Ulanqab,2026-05-11,0.0,0.0
+Envision Galaxy Ulanqab,2026-08-06,0.0,0.0
+Envision Galaxy Ulanqab,2026-09-05,0.0,0.0
+Envision Galaxy Ulanqab,2026-11-01,118.0,153.0
+Envision Galaxy Ulanqab,2027-07-01,235.0,306.0
+Envision Galaxy Ulanqab,2027-12-01,470.0,612.0
+Goodnight,2025-05-19,0.0,0.0
+Goodnight,2025-10-16,0.0,0.0
+Goodnight,2025-12-23,0.0,0.0
+Goodnight,2026-04-16,0.0,0.0
+Goodnight,2027-03-15,103.0,132.5
+Goodnight,2027-05-15,206.0,265.0
+Goodnight,2027-10-01,1006.0,1294.1
+Google Cedar Rapids,2024-06-14,0.0,0.0
+Google Cedar Rapids,2025-10-27,0.0,0.0
+Google Cedar Rapids,2025-12-29,0.0,0.0
+Google Cedar Rapids,2026-04-16,0.0,0.0
+Google Cedar Rapids,2026-12-31,87.0,105.0
+Google Cedar Rapids,2027-02-22,174.0,209.0
+Google Cedar Rapids,2027-05-23,261.0,314.0
+Google Fort Wayne,2024-04-01,0.0,0.0
+Google Fort Wayne,2024-09-13,0.0,0.0
+Google Fort Wayne,2025-06-10,0.0,0.0
+Google Fort Wayne,2025-10-01,0.0,0.0
+Google Fort Wayne,2026-03-01,0.0,0.0
+Google Fort Wayne,2026-08-19,0.0,0.0
+Google Fort Wayne,2026-12-01,173.0,207.0
+Google Fort Wayne,2027-03-31,345.0,414.0
+Google Fort Wayne,2027-08-28,518.0,621.0
+Google Fort Wayne,2028-01-25,690.0,828.0
+Google Fort Wayne,2028-06-23,863.0,1035.0
+Meta Bowling Green,2024-11-01,0.0,0.0
+Meta Bowling Green,2026-02-14,0.0,0.0
+Meta Bowling Green,2026-07-30,0.0,0.0
+Meta Bowling Green,2027-02-01,86.0,117.0
+Meta Bowling Green,2027-04-01,163.0,220.0
+Meta Bowling Green,2028-01-01,422.0,570.0
+Meta Hyperion,2024-12-20,0.0,0.0
+Meta Hyperion,2025-10-19,0.0,0.0
+Meta Hyperion,2026-04-19,0.0,0.0
+Meta Hyperion,2026-12-01,0.0,0.0
+Meta Hyperion,2028-01-01,1632.0,2203.0
+Microsoft Narvik Norway,2023-07-01,0.0,0.0
+Microsoft Narvik Norway,2025-06-27,0.0,0.0
+Microsoft Narvik Norway,2025-08-01,0.0,0.0
+Microsoft Narvik Norway,2026-05-31,0.0,0.0
+Microsoft Narvik Norway,2026-07-05,0.0,0.0
+Microsoft Narvik Norway,2026-12-31,92.0,124.0
+OpenAI Stargate Lordstown,2025-10-12,0.0,0.0
+OpenAI Stargate Lordstown,2026-02-27,0.0,0.0
+OpenAI Stargate Lordstown,2026-07-30,0.0,0.0
+OpenAI Stargate Lordstown,2027-03-01,214.0,300.0
+OpenAI Stargate Michigan,2025-12-04,0.0,0.0
+OpenAI Stargate Michigan,2026-01-20,0.0,0.0
+OpenAI Stargate Michigan,2026-03-12,0.0,0.0
+OpenAI Stargate Michigan,2028-12-31,988.0,1383.0
+OpenAI Stargate Milam,2025-09-27,0.0,0.0
+OpenAI Stargate Milam,2026-01-04,0.0,0.0
+OpenAI Stargate Milam,2026-03-23,0.0,0.0
+OpenAI Stargate Milam,2028-12-31,857.0,1200.0
+OpenAI Stargate New Mexico,2025-10-01,0.0,0.0
+OpenAI Stargate New Mexico,2026-02-06,0.0,0.0
+OpenAI Stargate New Mexico,2026-06-22,0.0,0.0
+OpenAI Stargate New Mexico,2028-12-31,1750.0,2450.0
+OpenAI Stargate Shackelford,2025-08-01,0.0,0.0
+OpenAI Stargate Shackelford,2026-01-18,0.0,0.0
+OpenAI Stargate Shackelford,2026-04-14,0.0,0.0
+OpenAI Stargate Shackelford,2026-09-04,0.0,0.0
+OpenAI Stargate Shackelford,2027-08-15,140.0,196.0
+OpenAI Stargate Shackelford,2027-10-19,280.0,392.0
+OpenAI Stargate Shackelford,2027-11-18,420.0,588.0
+OpenAI Stargate Shackelford,2028-02-11,560.0,784.0
+OpenAI Stargate Shackelford,2028-03-08,700.0,980.0
+OpenAI Stargate Shackelford,2028-04-04,840.0,1176.0
+OpenAI Stargate Shackelford,2028-05-12,980.0,1372.0
+OpenAI Stargate Shackelford,2028-10-17,1120.0,1568.0
+OpenAI Stargate Shackelford,2028-10-18,1260.0,1764.0
+OpenAI Stargate Shackelford,2028-11-11,1400.0,1960.0
+OpenAI Stargate UAE,2025-06-09,0.0,0.0
+OpenAI Stargate UAE,2025-11-16,0.0,0.0
+OpenAI Stargate UAE,2026-12-01,200.0,280.0
+OpenAI Stargate UAE,2028-01-01,1000.0,1400.0
+OpenAI Stargate Wisconsin,2026-01-02,0.0,0.0
+OpenAI Stargate Wisconsin,2026-02-14,0.0,0.0
+OpenAI Stargate Wisconsin,2026-07-24,0.0,0.0
+OpenAI Stargate Wisconsin,2028-12-31,902.0,1300.0
+QTS Cedar Rapids,2025-01-17,0.0,0.0
+QTS Cedar Rapids,2025-10-27,0.0,0.0
+QTS Cedar Rapids,2026-04-16,,
+QTS Cedar Rapids,2026-05-07,0.0,0.0
+QTS Cedar Rapids,2026-11-15,448.0,627.0
+QTS Cedar Rapids,2027-11-15,1133.0,1587.0
+QTS Eagle Mountain,2023-10-01,0.0,0.0
+QTS Eagle Mountain,2025-09-08,0.0,0.0
+QTS Eagle Mountain,2026-05-02,0.0,0.0
+QTS Eagle Mountain,2026-12-31,203.0,274.0
+QTS Eagle Mountain,2027-07-01,304.0,411.0
