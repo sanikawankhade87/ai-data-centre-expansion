@@ -1,0 +1,10 @@
+region,scenario,scenario_label,dc_growth_pct,other_growth_pct,basis
+United States,trend,"Measured trend, 2020 to 2025",15.708390494809542,1.6017022566906292,"Average yearly growth of data centre use, 2020 to 2025"
+United States,latest,"Latest year, 2024 to 2025",22.40436859183612,1.6017022566906292,Growth of data centre use from 2024 to 2025
+United States,construction,"Construction spending trend, 2020 to 2025",30.514873786179454,1.6017022566906292,"Average yearly growth of US construction spending (constant 2021 US$), complete calendar years 2020 to 2025"
+China,trend,"Measured trend, 2020 to 2025",13.542600227739632,6.291614575349791,"Average yearly growth of data centre use, 2020 to 2025"
+China,latest,"Latest year, 2024 to 2025",14.705881800996568,6.291614575349791,Growth of data centre use from 2024 to 2025
+Rest of world,trend,"Measured trend, 2020 to 2025",7.781804518275837,2.272870714031283,"Average yearly growth of data centre use, 2020 to 2025"
+Rest of world,latest,"Latest year, 2024 to 2025",9.923671167801018,2.272870714031283,Growth of data centre use from 2024 to 2025
+World,trend,"Measured trend, 2020 to 2025",12.511752358669238,3.4127938608884634,"Average yearly growth of data centre use, 2020 to 2025"
+World,latest,"Latest year, 2024 to 2025",16.586539484879626,3.4127938608884634,Growth of data centre use from 2024 to 2025

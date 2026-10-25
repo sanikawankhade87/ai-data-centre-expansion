@@ -1,0 +1,79 @@
+Entity,Year,Electricity demand
+China,2000,1346.85
+China,2001,1472.19
+China,2002,1645.61
+China,2003,1903.22
+China,2004,2197.23
+China,2005,2494.08
+China,2006,2858.84
+China,2007,3271.23
+China,2008,3482.96
+China,2009,3703.26
+China,2010,4193.65
+China,2011,4700.28
+China,2012,4976.76
+China,2013,5420.4
+China,2014,5783.04
+China,2015,5802.14
+China,2016,6120.44
+China,2017,6591.39
+China,2018,7150.92
+China,2019,7486.63
+China,2020,7762.03
+China,2021,8520.02
+China,2022,8835.76
+China,2023,9439.37
+China,2024,10069.88
+China,2025,10563.9
+United States,2000,3835.86
+United States,2001,3749.6
+United States,2002,3865.21
+United States,2003,3875.36
+United States,2004,3963.26
+United States,2005,4059.77
+United States,2006,4065.36
+United States,2007,4173.82
+United States,2008,4140.35
+United States,2009,3973.87
+United States,2010,4139.92
+United States,2011,4126.12
+United States,2012,4087.93
+United States,2013,4113.49
+United States,2014,4149.22
+United States,2015,4150.66
+United States,2016,4154.06
+United States,2017,4108.62
+United States,2018,4246.01
+United States,2019,4197.42
+United States,2020,4090.49
+United States,2021,4192.93
+United States,2022,4328.1
+United States,2023,4272.81
+United States,2024,4404.83
+United States,2025,4535.81
+World,2000,15278.78
+World,2001,15500.83
+World,2002,16049.89
+World,2003,16628.01
+World,2004,17414.99
+World,2005,18134.08
+World,2006,18838.99
+World,2007,19713.96
+World,2008,20102.64
+World,2009,19943.51
+World,2010,21263.75
+World,2011,21972.03
+World,2012,22515.66
+World,2013,23155.03
+World,2014,23747.07
+World,2015,24002.35
+World,2016,24694.51
+World,2017,25441.04
+World,2018,26464.49
+World,2019,26832.42
+World,2020,26723.37
+World,2021,28259.07
+World,2022,28917.76
+World,2023,29665.34
+World,2024,30930.23
+World,2025,31772.35
