@@ -1,0 +1,96 @@
+Name,Owner,Country,Current power (MW),Current total capital cost (2025 USD billions),owner_confidence,operational
+Colossus 2,SpaceXAI,United States,946.0,35.836372,confident,True
+Anthropic-Amazon New Carlisle,Amazon,United States,1037.0,39.283634,confident,True
+Microsoft Fairwater Atlanta,Microsoft,United States,636.0,24.092952,confident,True
+Google Pryor (North),Google,United States,368.0,13.940576,confident,True
+DayOne Nusajaya,Owner not disclosed,Malaysia,473.0,17.918186,none,True
+Meta Prometheus,Meta,United States,471.0,17.842422,confident,True
+OpenAI Stargate Abilene,Oracle,United States,421.0,15.948322,confident,True
+DayOne Kempas,Owner not disclosed,Malaysia,421.691664,15.974523615648,none,True
+Microsoft Fairwater Wisconsin,Microsoft,United States,369.0,13.978458,confident,True
+Google Columbus,Google,United States,303.0,11.478246,confident,True
+Google New Albany,Google,United States,333.0,12.614706,confident,True
+Google Mesa,Google,United States,183.0,6.932405999999999,confident,True
+Colossus 1,SpaceXAI,United States,340.0,12.87988,confident,True
+Google Council Bluffs (East),Google,United States,237.0,8.978034,confident,True
+CoreWeave Denton TX,CoreWeave,United States,262.0,9.925084,confident,True
+QTS Richmond 1,Owner not disclosed,United States,238.0,9.015916,none,True
+Bridge Data Centres MY06,ByteDance,Malaysia,243.0,9.205326,likely,True
+Meta Rosemount,Meta,United States,178.0,6.742996,confident,True
+Amazon Madison Mega Site,Amazon,United States,284.0,10.758488,confident,True
+Google Bristow,Google,United States,238.0,9.015916,untagged,True
+Microsoft Goodyear,Microsoft,United States,202.0,7.652164000000001,confident,True
+Meta Jeffersonville,Meta,United States,178.0,6.742996,confident,True
+Google Kansas City East,Google,United States,105.0,3.97761,confident,True
+Meta Temple,Meta,United States,178.0,6.742996,confident,True
+AWS New Albany,Amazon,United States,213.0,8.068866,confident,True
+Google Omaha,Google,United States,237.0,8.978034,confident,True
+Google Lincoln,Google,United States,141.0,5.341361999999999,confident,True
+QTS Richmond 2,Owner not disclosed,United States,180.0,6.818759999999999,none,True
+Google The Dalles,Google,United States,154.0,5.8338280000000005,confident,True
+QTS Richmond 3,Owner not disclosed,United States,144.0,5.455007999999999,none,True
+Meta Montgomery,Meta,United States,153.0,5.795946,confident,True
+Meta Kuna,Meta,United States,152.0,5.758064,confident,True
+Meta Cheyenne,Meta,United States,152.0,5.758064,confident,True
+Amazon Ridgeland,Amazon,United States,228.0,8.637096,confident,True
+Meta Huntsville,Meta,United States,146.0,5.530772,confident,True
+Coreweave Helios,CoreWeave,United States,132.0,5.000424000000001,confident,True
+Microsoft Project Osmium,Microsoft,United States,190.0,7.19758,confident,True
+Meta Eagle Mountain,Meta,United States,133.0,5.038306,confident,True
+Google Midlothian,Google,United States,103.0,3.901846,confident,True
+Google Storey County,Google,United States,161.0,6.0990020000000005,confident,True
+Google Lancaster,Google,United States,137.0,5.189834,confident,True
+Meta-QTS Hillsboro 2,Meta,United States,180.0,6.818759999999999,likely,True
+Google Waltham Cross,Google,United Kingdom,88.0,3.333616,confident,True
+VNET Bayin Ulanqab,VNET,China,221.0,8.371922,confident,True
+Google Arcola,Google,United States,77.0,2.916914,confident,True
+Google Red Oak,Google,United States,77.0,2.916914,confident,True
+Google Papillion,Google,United States,237.0,8.978034,confident,True
+Meta Gallatin,Meta,United States,87.0,3.2957339999999995,confident,True
+Meta Los Lunas,Meta,United States,87.0,3.2957339999999995,confident,True
+CoreWeave Ellendale ND,CoreWeave,United States,68.0,2.5759760000000003,confident,True
+Meta Sarpy,Meta,United States,80.0,3.03056,confident,True
+Huawei Horinger,Huawei,China,184.3,6.9816526,confident,True
+CoreWeave Chester VA,CoreWeave,United States,82.0,3.106324,confident,True
+Oracle Batam,Oracle,Indonesia,72.0,2.727504,likely,True
+AWS Berwick,Amazon,United States,108.0,4.091256,confident,True
+CoreWeave Marble NC,CoreWeave,United States,65.0,2.46233,confident,True
+Meta Aiken,Meta,United States,69.0,2.613858,confident,True
+Huawei Wuhu,Huawei,China,157.0,5.947474,confident,True
+Core42 Lake Mariner,Core42,United States,58.0,2.197156,confident,True
+Microsoft SAT40,Microsoft,United States,75.0,2.84115,confident,True
+STACK Infrastructure NVA02,Owner not disclosed,United States,85.0,3.21997,none,True
+Anthropic Lake Mariner,AI XPV Platform,United States,42.0,1.591044,confident,True
+Microsoft-Nebius New Jersey,Nebius,United States,50.0,1.8941,confident,True
+CoreWeave Norway,CoreWeave,Norway,42.0,1.591044,confident,True
+Nebius Mantsala,Nebius,Finland,75.0,2.84115,confident,True
+Southgate Melbourne,Firmus,Australia,41.0,1.553162,confident,True
+Stream Phoenix,Owner not disclosed,United States,64.0,2.424448,none,True
+Microsoft SAT14,Microsoft,United States,47.0,1.7804540000000002,confident,True
+Vantage TX1,Owner not disclosed,United States,32.0,1.212224,none,True
+CoreWeave Dalton 1 & 2,CoreWeave,United States,28.0,1.060696,confident,True
+Alibaba Zhangbei,Alibaba,China,169.0,6.402058,confident,True
+Start Campus Sines Data Campus,Nscale,Portugal,33.0,1.2501060000000002,confident,True
+xAI QTS Atlanta,SpaceXAI,United States,17.32971,0.6564840742199999,confident,True
+Nscale Keflavik,Nscale,Iceland,5.11,0.19357702,confident,True
+Anthropic Barber Lake,Cipher Mining,United States,0.0,0.0,confident,False
+CoreWeave Lancaster Greenfield site,CoreWeave,United States,0.0,0.0,confident,False
+CoreWeave Muskogee OK,CoreWeave,United States,0.0,0.0,confident,False
+Crusoe Abilene Expansion,Microsoft,United States,0.0,0.0,confident,False
+EcoDataCenter 2,Mistral AI,Sweden,0.0,0.0,confident,False
+Envision Galaxy Ulanqab,Owner not disclosed,China,0.0,0.0,none,False
+Goodnight,Google,United States,0.0,0.0,speculative,False
+Google Cedar Rapids,Google,United States,0.0,0.0,confident,False
+Google Fort Wayne,Google,United States,0.0,0.0,confident,False
+Meta Bowling Green,Meta,United States,0.0,0.0,confident,False
+Meta Hyperion,Meta,United States,0.0,0.0,confident,False
+Microsoft Narvik Norway,Nscale,Norway,0.0,0.0,likely,False
+OpenAI Stargate Lordstown,Softbank,United States,0.0,0.0,confident,False
+OpenAI Stargate Michigan,Oracle,United States,0.0,0.0,confident,False
+OpenAI Stargate Milam,Softbank,United States,0.0,0.0,confident,False
+OpenAI Stargate New Mexico,Oracle,United States,0.0,0.0,confident,False
+OpenAI Stargate Shackelford,Oracle,United States,0.0,0.0,confident,False
+OpenAI Stargate UAE,G42,United Arab Emirates,0.0,0.0,likely,False
+OpenAI Stargate Wisconsin,Oracle,United States,0.0,0.0,confident,False
+QTS Cedar Rapids,Owner not disclosed,United States,0.0,0.0,none,False
+QTS Eagle Mountain,Meta,United States,0.0,0.0,speculative,False
