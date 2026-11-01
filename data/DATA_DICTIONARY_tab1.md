@@ -6,8 +6,9 @@ Every dataset Tab 1 reads, from the raw download to the processed file. All tran
 |---|---|---|
 | `python scripts/download_tab1.py` | Published URLs | `data/raw/tab1/` (fresh copy, metadata and `retrieval_log.json`); compares it with the shared file |
 | `python scripts/download_tab1.py --replace` | Published URLs | The above, and replaces the shared `data/monthly-spending-data-center-us.csv` (agree with the group first: Tabs 3 and 4 read it too) |
-| `python -m src.tab1_prep` | Raw file | `data/processed/tab1_monthly.csv`, then runs the checks |
-| `python -m src.tab1_prep --validate` | Raw file | Seven checks, printed as PASS or FAIL |
+| `python -m src.tab1_prep` | Raw file | `data/sample/tab1_construction.csv` and `data/processed/tab1_monthly.csv`, then runs the checks |
+| `python -m src.tab1_prep --from-sample` | Sample | `data/processed/tab1_monthly.csv` (byte-identical to the full build), then runs the checks |
+| `python -m src.tab1_prep --validate` | Sample and processed file | Seven checks, printed as PASS or FAIL |
 
 ## Source dataset
 
@@ -21,7 +22,8 @@ What the series covers: on-site work to build privately owned data centre buildi
 
 | File | Primary key | Columns and units | Time coverage | Transform |
 |---|---|---|---|---|
-| `data/processed/tab1_monthly.csv` | month | `month` (YYYY-MM); `spend` (constant 2021 US$, as in the source); `spend_b` (US$ billions); `avg12_b` (US$ billions; empty for the first 11 months) | Jan 2014 to Aug 2026 | Keep United States rows. `spend_b` = `spend` ÷ 1,000,000,000. `avg12_b` = mean of `spend_b` for the month and the 11 before it |
+| `data/sample/tab1_construction.csv` | Month | `Entity`; `Code`; `Month` (YYYY-MM); `Data center construction` (constant 2021 US$), values unchanged | Jan 2014 to Aug 2026 | United States rows of the raw file, read and written as text |
+| `data/processed/tab1_monthly.csv` (also read by Tab 4) | month | `month` (YYYY-MM); `csv_line` (line in the raw file and sample); `spend` (constant 2021 US$, as in the source); `spend_b` (US$ billions); `avg12_b` (US$ billions; empty for the first 11 months) | Jan 2014 to Aug 2026 | Built from the sample. `spend_b` = `spend` ÷ 1,000,000,000. `avg12_b` = mean of `spend_b` for the month and the 11 before it |
 
 ## Card formulas
 
