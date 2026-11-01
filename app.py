@@ -34,6 +34,15 @@ ANSWER = (
     "demand. That recent gap covers only nine months of data (Tab 4)."
 )
 
+# Shown on the opening screen; each tab repeats its own sources and refresh date in full.
+SOURCES_LINE = (
+    "**Sources:** US Census Bureau construction spending and Business Trends and Outlook Survey; "
+    "IEA *Energy and AI* and Ember electricity data via Our World in Data; Epoch AI *AI data centers*. "
+    "**Data last refreshed:** files downloaded 23 to 25 Oct 2026. Latest observations: construction "
+    "spending Aug 2026, business AI use survey period ending 4 Oct 2026, electricity 2025, Epoch AI "
+    "sites Sep 2026. Details, licences and every transformation: `data/DATA_DICTIONARY.md` in the repository."
+)
+
 TABS = [
     # label, module, icon file, one-line question the tab answers
     ("🏗️ 1 · Pace of Construction", "tab1_construction", "tile_construction.svg",
@@ -137,6 +146,7 @@ def front_page() -> None:
     st.caption("Tabs 1 to 3 show the supply side of the expansion. "
                "Tab 4 compares it with measured AI use and carries the answer. "
                "Choose a tab below to explore.")
+    st.caption(SOURCES_LINE)
 
 
 front_page()

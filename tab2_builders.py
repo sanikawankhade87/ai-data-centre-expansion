@@ -3,7 +3,8 @@ Tab 2 - Builders and Locations
 Loaded by app.py, which calls render() inside the second tab.
 Question: Is AI data centre capacity concentrated in a few organisations or countries?
 Owner: Erkebai (Eric) Bakhavadinov
-Data: Epoch AI, 'AI data centers' (data/raw/data_centers.csv). Transformations: src/tab2_prep.py
+Data: Epoch AI, 'AI data centers' (data/raw/data_centers.csv -> data/sample/tab2_sites.csv ->
+data/processed/tab2_*.csv). Transformations: src/tab2_prep.py
 """
 
 import sys
@@ -27,7 +28,14 @@ TOP_BARS = 12  # bars drawn before folding the tail into "All other"
 
 @st.cache_data
 def get_data() -> pd.DataFrame:
-    return prep.clean(prep.load())
+    """Cleaned site list: data/processed/tab2_sites_clean.csv, built by src/tab2_prep.py."""
+    return prep.load_sites()
+
+
+@st.cache_data
+def get_share(view: str) -> pd.DataFrame:
+    """Owner or Country share table: data/processed/tab2_owner_share.csv or tab2_country_share.csv."""
+    return prep.load_share(view)
 
 
 def render() -> None:
@@ -55,7 +63,7 @@ def render() -> None:
             min_value=1, max_value=10, value=default_n, key=f"tab2_n_{view}",
         )
 
-    table = prep.share_table(df, by=view)
+    table = get_share(view)
     headline = prep.top_n_share(table, top_n, by=view)
     total_mw = df[prep.COL_POWER].sum()
 
@@ -108,13 +116,14 @@ def render() -> None:
     ))
     fig.update_layout(
         height=34 * len(shown) + 90,
-        margin=dict(l=10, r=60, t=40, b=30),
+        margin=dict(l=10, r=60, t=40, b=50),
         bargap=0.3,
         title=dict(text=f"Share of current AI data centre IT power (MW), by {label}",
                    font=dict(size=15), x=0, xanchor="left"),
-        xaxis=dict(title=None, ticksuffix="%", showgrid=True, gridcolor="rgba(137,135,129,0.2)",
+        xaxis=dict(title=dict(text="Share of current AI data centre IT power (%)", font=dict(size=13)),
+                   ticksuffix="%", showgrid=True, gridcolor="rgba(137,135,129,0.2)",
                    zeroline=False, range=[0, shown["share_pct"].max() * 1.15]),
-        yaxis=dict(title=None, autorange="reversed"),
+        yaxis=dict(title=dict(text=view, font=dict(size=13)), autorange="reversed"),
         plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
         showlegend=False,
     )
@@ -195,3 +204,9 @@ def render() -> None:
             f"{rows[prep.COL_POWER].sum():,.1f} MW ÷ {total_mw:,.1f} MW × 100 = {headline:.1f}%",
             language=None,
         )
+
+    st.caption(
+        f"Source: Epoch AI, *AI data centers* (CC BY), [{prep.RAW_URL}]({prep.RAW_URL}). "
+        f"**Data last refreshed:** file downloaded {pd.Timestamp(prep.DOWNLOADED):%d %b %Y} "
+        f"(Epoch AI release of {pd.Timestamp(prep.RELEASE):%d %b %Y}; {len(df)} sites, current IT power in MW)."
+    )

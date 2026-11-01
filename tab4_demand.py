@@ -28,13 +28,16 @@ import datetime as dt
 import inspect
 import math
 import re
+import sys
 from pathlib import Path
 
 import altair as alt
 import pandas as pd
 import streamlit as st
-from openpyxl import load_workbook
-from openpyxl.utils import get_column_letter
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from src import tab4_prep as prep  # noqa: E402  (every transformation lives in src/tab4_prep.py)
+from src import tab1_prep  # noqa: E402  (construction spending: the same processed file as Tab 1)
 
 DATA = Path(__file__).parent / "data"
 CONSTRUCTION_FILE = DATA / "monthly-spending-data-center-us.csv"
@@ -76,106 +79,38 @@ WINDOWS = {
 
 
 # ---------------------------------------------------------------------------
-# Loading the raw files
+# Loading the sample and processed files (built from the raw files by src/tab4_prep.py)
 # ---------------------------------------------------------------------------
 
-def _period_code(v) -> str | None:
-    """Turn a BTOS period header ('202618', 202618 or 202618.0) into '202618'."""
-    if v is None:
-        return None
-    s = str(v).strip()
-    if re.fullmatch(r"\d{6}(\.0)?", s):
-        return s[:6]
-    return None
-
-
-def _pct(cell) -> float:
-    """'23.2%' -> 23.2. '.' (no estimate) -> NaN."""
-    if cell is None:
-        return math.nan
-    if isinstance(cell, (int, float)):
-        return float(cell) * 100 if cell <= 1 else float(cell)
-    s = str(cell).strip().rstrip("%")
-    try:
-        return float(s)
-    except ValueError:
-        return math.nan
-
-
-def _excel_date(v) -> pd.Timestamp:
-    if isinstance(v, (dt.datetime, dt.date)):
-        return pd.Timestamp(v)
-    if isinstance(v, (int, float)):
-        return pd.Timestamp("1899-12-30") + pd.Timedelta(days=float(v))
-    return pd.to_datetime(str(v), format="%m/%d/%Y")
-
-
-def _ai_use_row(ws) -> tuple[dict, int, dict]:
-    """Find the 'used AI in the last two weeks: Yes' row in a BTOS sheet.
-
-    Matched on the question text rather than a fixed row number, so a new
-    question added above it in a later release does not break the tab.
-    Returns (period -> raw cell text, Excel row number, period -> column letter).
-    """
-    rows = ws.iter_rows(values_only=True)
-    header = next(rows)
-    cols = {i: _period_code(h) for i, h in enumerate(header) if _period_code(h)}
-    for r_num, row in enumerate(rows, start=2):
-        question = str(row[1] or "")
-        answer = str(row[3] or "").strip()
-        if (answer == "Yes" and "last two weeks" in question
-                and re.search(r"Artificial Intelligence|\bAI\b", question)):
-            raw = {code: ("" if row[i] is None else str(row[i])) for i, code in cols.items()}
-            letters = {code: get_column_letter(i + 1) for i, code in cols.items()}
-            return raw, r_num, letters
-    raise ValueError(f"No AI-use row found in sheet '{ws.title}'")
+_period_code, _pct, _excel_date = prep.period_code, prep.pct, prep.excel_date
 
 
 @st.cache_data
 def load_btos(key: str) -> dict:
-    """Raw AI-use estimates and standard errors for one question wording."""
-    w = WINDOWS[key]
-    wb = load_workbook(w["file"], read_only=True, data_only=True)
-    raw, row_num, letters = _ai_use_row(wb[w["sheet"]])
-    se_raw, _, _ = _ai_use_row(wb[w["se_sheet"]])
-    wb.close()
-    return {"raw": raw, "row": row_num, "letters": letters, "se_raw": se_raw}
+    """Raw AI-use cell text and standard errors for one question wording, from the sample file.
+
+    The sample keeps each cell's text exactly as in the workbook, with its Excel row and column,
+    so the trace below can point at the original cell.
+    """
+    s = prep.load_ai_sample()
+    s = s[s["window"] == key]
+    return {"raw": dict(zip(s["period"], s["estimate"])), "row": int(s["excel_row"].iloc[0]),
+            "letters": dict(zip(s["period"], s["column"])), "se_raw": dict(zip(s["period"], s["standard_error"]))}
 
 
 @st.cache_data
 def load_dates() -> pd.DataFrame:
-    """Reference period of every BTOS sample period (Smpdt), from National.xlsx.
+    """Reference period of every BTOS sample period (Smpdt), from National.xlsx via the sample file.
 
     The same period codes are used in both BTOS files, so one lookup serves both.
     """
-    wb = load_workbook(BTOS_NOW_FILE, read_only=True, data_only=True)
-    rows = list(wb[DATES_SHEET].iter_rows(values_only=True))
-    wb.close()
-    header = [str(h or "").strip().lower() for h in rows[0]]
-    i_code = header.index("smpdt")
-    i_start = next(i for i, h in enumerate(header) if h.startswith("reference period start") or h == "ref start")
-    i_end = next(i for i, h in enumerate(header) if h.startswith("ref end"))
-    i_pub = next((i for i, h in enumerate(header) if h.startswith("publication")), None)
-    out = []
-    for r_num, row in enumerate(rows[1:], start=2):
-        code = _period_code(row[i_code]) if i_code < len(row) else None
-        if code and row[i_end] is not None:
-            out.append({"period": code, "ref_start": _excel_date(row[i_start]),
-                        "ref_end": _excel_date(row[i_end]), "dates_row": r_num,
-                        "published": (_excel_date(row[i_pub]) if i_pub is not None and i_pub < len(row)
-                                      and row[i_pub] not in (None, "") else pd.NaT)})
-    return pd.DataFrame(out)
+    return prep.load_dates()[["period", "ref_start", "ref_end", "dates_row", "published"]]
 
 
 @st.cache_data
 def load_construction() -> pd.DataFrame:
-    raw = pd.read_csv(CONSTRUCTION_FILE)
-    cols = {c.lower(): c for c in raw.columns}
-    value_col = [c for c in raw.columns if c.lower() not in ("entity", "code", "month", "year", "day")][0]
-    df = raw[raw[cols["entity"]] == "United States"].copy()
-    df["month"] = pd.to_datetime(df[cols["month"]], format="%Y-%m")
-    df["csv_line"] = df.index + 2          # line 1 is the header
-    return df.rename(columns={value_col: "spend"})[["month", "spend", "csv_line"]].reset_index(drop=True)
+    """Monthly construction spending: Tab 1's processed file, so both tabs show the same numbers."""
+    return tab1_prep.load_processed()[["month", "spend", "csv_line"]]
 
 
 # ---------------------------------------------------------------------------
@@ -183,22 +118,18 @@ def load_construction() -> pd.DataFrame:
 # ---------------------------------------------------------------------------
 
 def monthly_ai(key: str, dates: pd.DataFrame) -> pd.DataFrame:
-    """Average the two-week BTOS estimates into calendar months.
+    """Monthly share of firms using AI for one question wording, from data/processed/tab4_ai_monthly.csv.
 
-    Each estimate is placed in the month its reference period ends, then the
-    estimates in a month are averaged (usually two, sometimes three).
+    Built by src/tab4_prep.py: each two-week estimate is placed in the month its reference period
+    ends, then the estimates in a month are averaged (usually two, sometimes three).
     """
-    b = load_btos(key)
-    d = dates.copy()
-    d["pct"] = d["period"].map(lambda p: _pct(b["raw"].get(p)))
-    d["se"] = d["period"].map(lambda p: _pct(b["se_raw"].get(p)))
-    d = d.dropna(subset=["pct"])
-    d["month"] = d["ref_end"].dt.to_period("M").dt.to_timestamp()
-    g = d.groupby("month")
-    out = g.agg(ai=("pct", "mean"), periods=("period", list), n=("pct", "size")).reset_index()
-    # Standard error of a mean of independent estimates: sqrt(sum se^2) / n.
-    out["ai_se"] = g["se"].apply(lambda s: math.sqrt((s ** 2).sum()) / len(s)).values
-    return out
+    df = _ai_monthly_all()
+    return df[df["window"] == key][["month", "ai", "periods", "n", "ai_se"]].reset_index(drop=True)
+
+
+@st.cache_data
+def _ai_monthly_all() -> pd.DataFrame:
+    return prep.load_processed()
 
 
 def window_months(key: str, dates: pd.DataFrame, spend: pd.DataFrame) -> list[pd.Timestamp]:
@@ -308,8 +239,26 @@ def panel(w: dict, y_max: float, show_legend: bool) -> alt.LayerChart:
                         legend=None),
     )
 
-    return alt.layer(baseline, lines, guide, points, labels).properties(
-        title=alt.Title(window_title(w), subtitle=WINDOWS[w["key"]]["wording"],
+    # Quarterly value labels (January, April, July, October) so the lines can be read without
+    # hovering. The higher line's label goes above its point and the lower line's below, so they
+    # do not collide.
+    q = df[df["month"].dt.month.isin([1, 4, 7, 10]) & (df["month"] < df["month"].max())]
+    qlab = pd.concat([
+        pd.DataFrame({"month": q["month"], "series": SUPPLY, "index": q["idx_supply"],
+                      "pos": (q["idx_supply"] > q["idx_demand"]).map({True: "above", False: "below"})}),
+        pd.DataFrame({"month": q["month"], "series": DEMAND, "index": q["idx_demand"],
+                      "pos": (q["idx_demand"] >= q["idx_supply"]).map({True: "above", False: "below"})}),
+    ])
+    qlab["label"] = qlab["index"].map(lambda v: f"{v:.0f}")
+    qtext = alt.Chart(qlab).encode(
+        x="month:T", y="index:Q", text="label:N",
+        color=alt.Color("series:N", scale=alt.Scale(domain=[SUPPLY, DEMAND], range=[SUPPLY_TEXT, DEMAND_TEXT]),
+                        legend=None))
+    qlabels = (qtext.transform_filter("datum.pos == 'above'").mark_text(dy=-11, fontSize=11, fontWeight="bold")
+               + qtext.transform_filter("datum.pos == 'below'").mark_text(dy=13, fontSize=11, fontWeight="bold"))
+
+    return alt.layer(baseline, lines, guide, points, qlabels, labels).properties(
+        title=alt.Title(window_title(w), subtitle=WINDOWS[w["key"]]["wording"] + ". Index values labelled each quarter",
                         fontSize=14, subtitleFontSize=12, subtitleColor=MUTED, anchor="start"),
         height=380,
     )

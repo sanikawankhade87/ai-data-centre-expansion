@@ -44,8 +44,8 @@ NEON_CSS = """
 
 @st.cache_data
 def load_data() -> pd.DataFrame:
-    """Steps 1 and 2 from src/tab1_prep.py: read the raw file, one row per month."""
-    return prep.monthly(prep.load_raw())
+    """data/processed/tab1_monthly.csv, built from the sample by src/tab1_prep.py."""
+    return prep.load_processed()
 
 
 def build_chart(df: pd.DataFrame, show_avg: bool) -> alt.LayerChart:
@@ -55,8 +55,8 @@ def build_chart(df: pd.DataFrame, show_avg: bool) -> alt.LayerChart:
     if not show_avg:
         long = long[long["series"] == "Monthly spending"]
 
-    x = alt.X("month:T", title=None, axis=alt.Axis(format="%Y", labelFontSize=14, grid=False,
-                                                   tickCount="year"))
+    x = alt.X("month:T", title="Month", axis=alt.Axis(format="%Y", labelFontSize=14, titleFontSize=14,
+                                                      grid=False, tickCount="year"))
     y = alt.Y("b:Q", title="Spending per month (billion US$, 2021 prices)",
               scale=alt.Scale(domain=[0, float(df["spend_b"].max()) * 1.12]),
               axis=alt.Axis(labelFontSize=14, titleFontSize=14))
@@ -94,6 +94,16 @@ def build_chart(df: pd.DataFrame, show_avg: bool) -> alt.LayerChart:
                                            color=CONTEXT_TEXT).encode(x="month:T", y=alt.value(0),
                                                                       text="txt:N")
 
+    # Value labels so the chart can be read without hovering: the labelled series each December.
+    lab_series = "12-month average" if show_avg else "Monthly spending"
+    dec = long[(long["series"] == lab_series) & (long["month"].dt.month == 12)].copy()
+    dec["label"] = dec["b"].map(lambda v: f"{v:.2f}")
+    dec_labels = alt.Chart(dec).mark_text(dy=-14, fontSize=12, fontWeight="bold").encode(
+        x="month:T", y="b:Q", text="label:N",
+        color=alt.value(HIGHLIGHT_TEXT if show_avg else CONTEXT_TEXT))
+    dec_dots = alt.Chart(dec).mark_point(filled=True, size=45, opacity=1).encode(
+        x="month:T", y="b:Q", color=alt.value(HIGHLIGHT if show_avg else CONTEXT_TEXT))
+
     last = long[long["month"] == long["month"].max()].copy()
     last["label"] = last.apply(lambda r: f"{r['series']} ${r['b']:.2f}bn", axis=1)
     end_labels = alt.Chart(last).mark_text(align="right", dx=-8, dy=-12, fontSize=14, fontWeight="bold").encode(
@@ -102,8 +112,12 @@ def build_chart(df: pd.DataFrame, show_avg: bool) -> alt.LayerChart:
                             alt.value(HIGHLIGHT_TEXT), alt.value(CONTEXT_TEXT)))
 
     return (
-        alt.layer(halo, lines, rule, rule_txt, guide, dots, end_labels)
-        .properties(height=440)
+        alt.layer(halo, lines, rule, rule_txt, guide, dots, dec_dots, dec_labels, end_labels)
+        .properties(height=440, title=alt.Title(
+            "US data centre construction spending per month, billion US$ at 2021 prices",
+            subtitle=f"Labelled values: {lab_series.lower()} each December (billion US$). "
+                     f"Grey = monthly spending; amber = 12-month average.",
+            fontSize=15, subtitleFontSize=12, subtitleColor=CONTEXT_TEXT, anchor="start"))
         .configure_view(strokeWidth=0)
         .configure(background="transparent")
     )
@@ -132,12 +146,13 @@ def render() -> None:
 
     # --- Summary cards -------------------------------------------------------
     c1, c2, c3 = st.columns(3)
-    c1.metric(f"Spending in {m(latest['month'])}", f"${latest['spend_b']:.2f}bn",
+    c1.metric(f"Spending in {m(latest['month'])} (2021 US$)", f"${latest['spend_b']:.2f}bn",
               f"{same_month_growth:+.0f}% vs {m(year_ago['month'])}", delta_color="off", border=True)
-    c2.metric("12-month average per month", f"${latest['avg12_b']:.2f}bn",
-              f"{since_ai:.1f}× the level before ChatGPT", delta_color="off", border=True)
-    c3.metric("Growth of the 12-month average, past year", f"{avg_growth_now:+.0f}%",
-              f"was {avg_growth_before:+.0f}% the year before", delta_color="off", border=True)
+    c2.metric(f"12-month average per month to {m(latest['month'])} (2021 US$)", f"${latest['avg12_b']:.2f}bn",
+              f"{since_ai:.1f}× the {m(CHATGPT)} level, before ChatGPT", delta_color="off", border=True)
+    c3.metric(f"Growth of the 12-month average, year to {m(latest['month'])}", f"{avg_growth_now:+.0f}%",
+              f"was {avg_growth_before:+.0f}% in the year to {m(year_ago['month'])}", delta_color="off",
+              border=True)
 
     # --- Main chart ----------------------------------------------------------
     with st.container(border=True):
@@ -148,16 +163,18 @@ def render() -> None:
         view = df[df["month"].dt.year >= start]
         st.altair_chart(build_chart(view, show_avg), width="stretch")
         st.caption(
-            "Hover over the chart to see the values for any month. The grey line is the raw monthly "
+            f"Monthly US spending on building data centres, {m(view['month'].min())} to "
+            f"{m(view['month'].max())}, in billion US$ at 2021 prices. The grey line is the raw monthly "
             "figure, which is not seasonally adjusted, so it wobbles with the construction season. "
             "The amber line is the 12-month average, which smooths that out. Recent months are "
-            "preliminary and the Census Bureau revises them."
+            "preliminary and the Census Bureau revises them. Every monthly value is listed in "
+            "📋 All data used in this tab, and hovering shows any month."
         )
 
     st.info(
         f"**What this means for Dana:** construction spending is still rising fast. "
         f"{m(latest['month'])} was {same_month_growth:.0f}% above the same month a year earlier, and the "
-        f"12-month average is {since_ai:.1f} times its level before ChatGPT. But the growth *rate* has "
+        f"12-month average is {since_ai:.1f} times its {m(CHATGPT)} level, just before ChatGPT. But the growth *rate* has "
         f"slowed: the 12-month average grew {avg_growth_now:.0f}% in the past year, down from "
         f"{avg_growth_before:.0f}% the year before. More is being built every month, just not at an "
         f"ever-faster rate. This covers buildings only (not servers) for all data centres, not only AI.",
@@ -214,6 +231,11 @@ def render() -> None:
         f"Source: {SOURCE_TEXT}. [{SOURCE_URL}]({SOURCE_URL}). Private construction of data centre "
         "buildings only, in constant 2021 US$; excludes servers and other IT equipment, land and "
         "maintenance. Not seasonally adjusted. Covers all data centres; the source does not separate AI."
+    )
+    st.caption(
+        f"**Data last refreshed:** file downloaded from Our World in Data on "
+        f"{pd.Timestamp(prep.RETRIEVED):%d %b %Y}; latest month in the data: {latest['month']:%B %Y} "
+        f"(recent months are preliminary)."
     )
 
 

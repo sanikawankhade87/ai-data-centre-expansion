@@ -12,14 +12,16 @@
 | `src/tab1_prep.py` | Every transformation, in four commented steps, plus seven checks that can fail |
 | `scripts/download_tab1.py` | Downloads a fresh, unedited copy from Our World in Data to `data/raw/tab1/` and compares it with the shared file |
 | `data/monthly-spending-data-center-us.csv` | Raw OWID download (never edited by hand). Shared with Tabs 3 and 4 so all tabs show the same numbers |
-| `data/processed/tab1_monthly.csv` | Processed file written by `src/tab1_prep.py`: monthly spending in US$ billions and the 12-month average |
+| `data/sample/tab1_construction.csv` | Source sample: the rows and columns Tab 1 uses, values unchanged |
+| `data/processed/tab1_monthly.csv` | Processed file the tab reads, built from the sample by `src/tab1_prep.py`: monthly spending in US$ billions and the 12-month average (also read by Tab 4) |
 | `data/DATA_DICTIONARY_tab1.md` | Every column, unit, formula and check |
 
 ## Run it
 
 ```bash
 pip install -r requirements.txt
-python -m src.tab1_prep               # rebuild the processed file and run the checks
+python -m src.tab1_prep               # raw file -> sample -> processed file, then the checks
+python -m src.tab1_prep --from-sample # rebuild the processed file from the sample
 python -m src.tab1_prep --validate    # checks only
 streamlit run app.py                  # Tab 1 is the first tab
 streamlit run tab1_construction.py    # or preview Tab 1 on its own
