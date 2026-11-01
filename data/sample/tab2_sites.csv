@@ -1,0 +1,96 @@
+Name,Owner,Country,Current power (MW),Current total capital cost (2025 USD billions)
+Colossus 2,SpaceXAI #confident,United States,946,35.836372
+Anthropic-Amazon New Carlisle,Amazon #confident,United States,1037,39.283634
+Microsoft Fairwater Atlanta,Microsoft #confident,United States,636,24.092952
+Google Pryor (North),Google #confident,United States,368,13.940576
+DayOne Nusajaya,,Malaysia,473,17.918186
+Meta Prometheus,Meta #confident,United States,471,17.842422
+OpenAI Stargate Abilene,Oracle #confident,United States,421,15.948322
+DayOne Kempas,,Malaysia,421.691664,15.974523615648
+Microsoft Fairwater Wisconsin,Microsoft #confident,United States,369,13.978458
+Google Columbus,Google #confident,United States,303,11.478245999999999
+Google New Albany,Google #confident,United States,333,12.614706
+Google Mesa,Google #confident,United States,183,6.932405999999999
+Colossus 1,SpaceXAI #confident,United States,340,12.87988
+Google Council Bluffs (East),Google #confident,United States,237,8.978034
+CoreWeave Denton TX,CoreWeave #confident,United States,262,9.925084
+QTS Richmond 1,,United States,238,9.015915999999999
+Bridge Data Centres MY06,ByteDance #likely,Malaysia,243,9.205326
+Meta Rosemount,Meta #confident,United States,178,6.742996
+Amazon Madison Mega Site,Amazon #confident,United States,284,10.758488
+Google Bristow,Google,United States,238,9.015915999999999
+Microsoft Goodyear,Microsoft #confident,United States,202,7.652164000000001
+Meta Jeffersonville,Meta #confident,United States,178,6.742996
+Google Kansas City East,Google #confident,United States,105,3.9776099999999994
+Meta Temple,Meta #confident,United States,178,6.742996
+AWS New Albany,Amazon #confident,United States,213,8.068866
+Google Omaha,Google #confident,United States,237,8.978034
+Google Lincoln,Google #confident,United States,141,5.341361999999999
+QTS Richmond 2,,United States,180,6.818759999999999
+Google The Dalles,Google #confident,United States,154,5.8338280000000005
+QTS Richmond 3,,United States,144,5.455007999999999
+Meta Montgomery,Meta #confident,United States,153,5.795946
+Meta Kuna,Meta #confident,United States,152,5.758064
+Meta Cheyenne,Meta #confident,United States,152,5.758064
+Amazon Ridgeland,Amazon #confident,United States,228,8.637096
+Meta Huntsville,Meta #confident,United States,146,5.530772
+Coreweave Helios,CoreWeave #confident,United States,132,5.000424000000001
+Microsoft Project Osmium,Microsoft #confident,United States,190,7.19758
+Meta Eagle Mountain,Meta #confident,United States,133,5.038306
+Google Midlothian,Google #confident,United States,103,3.901846
+Google Storey County,Google #confident,United States,161,6.0990020000000005
+Google Lancaster,Google #confident,United States,137,5.189834
+Meta-QTS Hillsboro 2,Meta #likely,United States,180,6.818759999999999
+Google Waltham Cross,Google #confident,United Kingdom,88,3.3336159999999997
+VNET Bayin Ulanqab,VNET #confident,China,221,8.371922
+Google Arcola,Google #confident,United States,77,2.9169140000000002
+Google Red Oak,Google #confident,United States,77,2.9169140000000002
+Google Papillion,Google #confident,United States,237,8.978034
+Meta Gallatin,Meta #confident,United States,87,3.2957339999999995
+Meta Los Lunas,Meta #confident,United States,87,3.2957339999999995
+CoreWeave Ellendale ND,CoreWeave #confident,United States,68,2.5759760000000003
+Meta Sarpy,Meta #confident,United States,80,3.03056
+Huawei Horinger,Huawei #confident,China,184.3,6.9816526
+CoreWeave Chester VA,CoreWeave #confident,United States,82,3.106324
+Oracle Batam,Oracle #likely,Indonesia,72,2.7275039999999997
+AWS Berwick,Amazon #confident,United States,108,4.091256
+CoreWeave Marble NC,CoreWeave #confident,United States,65,2.46233
+Meta Aiken,Meta #confident,United States,69,2.613858
+Huawei Wuhu,Huawei #confident,China,157,5.947474
+Core42 Lake Mariner,Core42 #confident,United States,58,2.197156
+Microsoft SAT40,Microsoft #confident,United States,75,2.84115
+STACK Infrastructure NVA02,,United States,85,3.21997
+Anthropic Lake Mariner,AI XPV Platform #confident,United States,42,1.5910440000000001
+Microsoft-Nebius New Jersey,Nebius #confident,United States,50,1.8941
+CoreWeave Norway,CoreWeave #confident,Norway,42,1.5910440000000001
+Nebius Mantsala,Nebius #confident,Finland,75,2.84115
+Southgate Melbourne,Firmus #confident,Australia,41,1.553162
+Stream Phoenix,,United States,64,2.424448
+Microsoft SAT14,Microsoft #confident,United States,47,1.7804540000000002
+Vantage TX1,,United States,32,1.212224
+CoreWeave Dalton 1 & 2,CoreWeave #confident,United States,28,1.060696
+Alibaba Zhangbei,Alibaba #confident,China,169,6.402058
+Start Campus Sines Data Campus,Nscale #confident,Portugal,33,1.2501060000000002
+xAI QTS Atlanta,SpaceXAI #confident,United States,17.32971,0.6564840742199999
+Nscale Keflavik,Nscale #confident,Iceland,5.11,0.19357702
+Anthropic Barber Lake,Cipher Mining #confident,United States,0,0
+CoreWeave Lancaster Greenfield site,CoreWeave #confident,United States,0,0
+CoreWeave Muskogee OK,CoreWeave #confident,United States,0,0
+Crusoe Abilene Expansion,Microsoft #confident,United States,0,0
+EcoDataCenter 2,Mistral AI #confident,Sweden,0,0
+Envision Galaxy Ulanqab,,China,0,0
+Goodnight,Google #speculative,United States,0,0
+Google Cedar Rapids,Google #confident,United States,0,0
+Google Fort Wayne,Google #confident,United States,0,0
+Meta Bowling Green,Meta #confident,United States,0,0
+Meta Hyperion,Meta #confident,United States,0,0
+Microsoft Narvik Norway,Nscale #likely,Norway,0,0
+OpenAI Stargate Lordstown,Softbank #confident,United States,0,0
+OpenAI Stargate Michigan,Oracle #confident,United States,0,0
+OpenAI Stargate Milam,Softbank #confident,United States,0,0
+OpenAI Stargate New Mexico,Oracle #confident,United States,0,0
+OpenAI Stargate Shackelford,Oracle #confident,United States,0,0
+OpenAI Stargate UAE,G42 #likely,United Arab Emirates,0,0
+OpenAI Stargate Wisconsin,Oracle #confident,United States,0,0
+QTS Cedar Rapids,,United States,0,0
+QTS Eagle Mountain,Meta #speculative,United States,0,0
