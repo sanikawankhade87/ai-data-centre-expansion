@@ -35,7 +35,6 @@ FILES = {
     "projection": PROCESSED / "tab3_projection.csv",
 }
 RAW = ROOT / "data" / "raw" / "tab3"
-RAW_SHARE, RAW_DEMAND = RAW / "owid_dc_share.csv", RAW / "owid_electricity_demand.csv"
 
 US = "United States"
 REGIONS = [US, "China", "Rest of world", "World"]
@@ -44,6 +43,7 @@ CONTEXT = "#A79E97"      # warm grey: everything else
 FOCUS_TEXT = "#A85A0C"   # darker shades for text, readable in a screen recording
 CONTEXT_TEXT = "#766D66"
 FLAT_FILL = "#EFE6DD"
+LEGEND_SHARE = 0.55      # share of the Section 5 plot height kept clear for the legend box
 
 
 def fit(fn) -> dict:
@@ -105,13 +105,18 @@ def demand_chart(us: pd.DataFrame) -> alt.LayerChart:
     dots = alt.Chart(us).mark_point(color=FOCUS, filled=True, size=40, opacity=1).encode(
         x=x, y=y, tooltip=[alt.Tooltip("year:Q", title="Year", format="d"),
                            alt.Tooltip("demand_twh:Q", title="Demand (TWh)", format=",.0f")])
-    keys = us[us["year"].isin([2000, y0, y1, int(us["year"].max())])].assign(
+    # Label every fifth year plus the two ends of the flat period, so values can be read without hovering.
+    # 2020 sits one year before 2021, so its label goes below the line to keep the two apart.
+    keys = us[us["year"].isin(list(range(2000, 2026, 5)) + [y0, y1])].assign(
         label=lambda d: d["demand_twh"].map("{:,.0f}".format))
-    labels = alt.Chart(keys).mark_text(fontSize=13, fontWeight="bold", color=FOCUS_TEXT, dy=-14).encode(
-        x=x, y=y, text="label:N")
-    return alt.layer(band, band_label, line, dots, labels).properties(
+    below = keys["year"].eq(y1 - 1)
+    label_mark = dict(fontSize=13, fontWeight="bold", color=FOCUS_TEXT)
+    labels = alt.Chart(keys[~below]).mark_text(dy=-14, **label_mark).encode(x=x, y=y, text="label:N")
+    labels_below = alt.Chart(keys[below]).mark_text(dy=18, **label_mark).encode(x=x, y=y, text="label:N")
+    return alt.layer(band, band_label, line, dots, labels, labels_below).properties(
         height=300, title=alt.Title("US electricity demand, 2000 to 2025 (TWh)",
-                                    subtitle="Labelled values mark the start, the flat period and the latest year"))
+                                    subtitle=f"Labelled values mark every fifth year and the flat period, "
+                                             f"{y0} to {y1}"))
 
 
 def dc_bar_chart(us: pd.DataFrame) -> alt.LayerChart:
@@ -155,14 +160,19 @@ def capacity_chart(cap: pd.DataFrame, retrieved: pd.Timestamp) -> alt.LayerChart
     d = pd.concat([d, last]).sort_values(["status", "date"])
     x = alt.X("date:T", title="Month", axis=alt.Axis(format="%Y", tickCount="year", grid=False))
     # Headroom above the highest value so its label stays inside the chart area.
-    y = alt.Y("power_gw:Q", title="Power (GW)",
+    y = alt.Y("power_gw:Q", title="Power capacity (GW)",
               scale=alt.Scale(domain=[0, float(d["power_gw"].max()) * 1.2]))
-    colour = alt.Color("status:N", title="Status", scale=alt.Scale(domain=["Reported", "Planned"],
-                                                                  range=[FOCUS, FOCUS]),
-                       legend=alt.Legend(orient="top-left", symbolType="stroke", symbolStrokeWidth=3))
-    dash = alt.StrokeDash("status:N", scale=alt.Scale(domain=["Reported", "Planned"], range=[[1, 0], [6, 4]]),
-                          legend=None)
-    line = alt.Chart(d).mark_line(strokeWidth=3).encode(x=x, y=y, color=colour, strokeDash=dash)
+    # One colour for both lines, so the legend is drawn from the line style: solid = reported, dashed = planned.
+    # Long legend samples so the dashes are visible, inside a bordered box.
+    dash = alt.StrokeDash(
+        "status:N", title="Status",
+        scale=alt.Scale(domain=["Reported", "Planned"], range=[[1, 0], [6, 4]]),
+        legend=alt.Legend(orient="top-left", symbolType="stroke", symbolStrokeWidth=3, symbolSize=600,
+                          symbolStrokeColor=FOCUS, labelExpr="datum.label == 'Reported' ? "
+                          "'Reported (solid line)' : 'Planned (dashed line)'",
+                          labelFontSize=12, titleFontSize=12, padding=8, cornerRadius=4,
+                          strokeColor="#D9D4CE", fillColor="#FFFFFF"))
+    line = alt.Chart(d).mark_line(strokeWidth=3, color=FOCUS).encode(x=x, y=y, strokeDash=dash)
 
     # Label each year end up to 2028, the latest reported month and the final month.
     year_ends = d[d["date"].dt.month.eq(12) & d["date"].dt.year.le(2028)]
@@ -170,43 +180,57 @@ def capacity_chart(cap: pd.DataFrame, retrieved: pd.Timestamp) -> alt.LayerChart
     marks = marks.drop_duplicates("date")
     marks = marks[marks["power_gw"] >= 1].assign(label=lambda m: m["power_gw"].map("{:.1f}".format))
     dots = alt.Chart(marks).mark_point(filled=True, size=50, color=FOCUS, opacity=1).encode(x=x, y=y)
-    text = alt.Chart(marks).mark_text(dy=-12, fontSize=12, fontWeight="bold", color=FOCUS_TEXT).encode(
-        x=x, y=y, text="label:N")
+    # The line rises to the right, so each label sits above and to the left of its point, clear of the line.
+    # A label just after the retrieval date would cross the dashed rule, so it goes below and to the right.
+    after_rule = (marks["date"] > retrieved) & (marks["date"] <= retrieved + pd.Timedelta(days=120))
+    label_mark = dict(fontSize=12, fontWeight="bold", color=FOCUS_TEXT)
+    text = alt.layer(
+        alt.Chart(marks[~after_rule]).mark_text(align="right", dx=-7, dy=-8, **label_mark).encode(
+            x=x, y=y, text="label:N"),
+        alt.Chart(marks[after_rule]).mark_text(align="left", dx=7, dy=10, **label_mark).encode(
+            x=x, y=y, text="label:N"))
     rule = alt.Chart(pd.DataFrame({"date": [retrieved]})).mark_rule(color=CONTEXT_TEXT, strokeDash=[3, 3]) \
         .encode(x="date:T")
     rule_text = alt.Chart(pd.DataFrame({"date": [retrieved], "t": [f"Data retrieved {retrieved:%d %b %Y}"]})) \
         .mark_text(align="right", dx=-6, dy=4, fontSize=12, color=CONTEXT_TEXT).encode(
             x="date:T", y=alt.value(10), text="t:N")
     return alt.layer(line, rule, rule_text, dots, text).properties(
-        height=300, title=alt.Title("Power of US frontier AI data centres, reported and planned (GW)",
+        height=300, title=alt.Title("Power capacity of US frontier AI data centres, reported and planned (GW)",
                                     subtitle="Labels show the end of each year to 2028, the latest reported month "
                                              "and January 2030"))
 
 
 def projection_chart(measured: pd.DataFrame, proj: pd.DataFrame, region: str) -> alt.LayerChart:
-    """Section 5: measured use (solid) and the projection at one rate (dashed)."""
-    m = measured.assign(kind="Measured")
-    p = proj.assign(kind="Projected")
+    """Section 5: measured use (solid), the projection at one rate (dashed) and the gap years (dotted)."""
+    m, p = measured, proj
+    kinds = ["Measured (solid line)", "Projected (dashed line)", "No data for 2021 and 2022 (dotted line)"]
+    lines = pd.concat([m[m["year"] >= 2023].assign(kind=kinds[0]), p.assign(kind=kinds[1]),
+                       m[m["year"].isin([2020, 2023])].assign(kind=kinds[2])])
     x = alt.X("year:Q", title="Year", scale=alt.Scale(domain=[2019.5, 2030.5]),
               axis=alt.Axis(format="d", values=list(range(2020, 2031)), grid=False))
-    top = float(max(m["dc_twh"].max(), p["dc_twh"].max())) * 1.15
+    # The legend box sits in the top-left corner, as in Section 4. The axis is given enough headroom that
+    # the earliest values (2020 to 2023) and their labels stay below the box, even for slow-growing regions.
+    early = float(m.loc[m["year"] <= 2023, "dc_twh"].max())
+    top = max(float(max(m["dc_twh"].max(), p["dc_twh"].max())) * 1.15, early / (1 - LEGEND_SHARE))
     y = alt.Y("dc_twh:Q", title="Data centre electricity use (TWh)", scale=alt.Scale(domain=[0, top]))
-    gap = alt.Chart(m[m["year"].isin([2020, 2023])]).mark_line(color=CONTEXT, strokeDash=[2, 4], strokeWidth=2) \
-        .encode(x=x, y=y)
-    solid = alt.Chart(m[m["year"] >= 2023]).mark_line(color=FOCUS, strokeWidth=3).encode(x=x, y=y)
-    dashed = alt.Chart(p).mark_line(color=FOCUS, strokeWidth=3, strokeDash=[6, 4]).encode(x=x, y=y)
+    # Colour and line style share one field and one title, so they are drawn as a single legend.
+    legend = alt.Legend(orient="top-left", symbolType="stroke", symbolStrokeWidth=3, symbolSize=600,
+                        labelFontSize=12, titleFontSize=12, labelLimit=320, padding=8, cornerRadius=4,
+                        strokeColor="#D9D4CE", fillColor="#FFFFFF")
+    line = alt.Chart(lines).mark_line(strokeWidth=3).encode(
+        x=x, y=y,
+        color=alt.Color("kind:N", title="Status", legend=legend,
+                        scale=alt.Scale(domain=kinds, range=[FOCUS, FOCUS, CONTEXT])),
+        strokeDash=alt.StrokeDash("kind:N", title="Status", legend=legend,
+                                  scale=alt.Scale(domain=kinds, range=[[1, 0], [6, 4], [2, 4]])))
     pts = pd.concat([m, p[p["year"] > 2025]]).assign(label=lambda d: d["dc_twh"].map("{:.0f}".format))
-    dots = alt.Chart(pts).mark_point(filled=True, size=50, color=FOCUS, opacity=1).encode(
-        x=x, y=y, shape=alt.Shape("kind:N", title=None, scale=alt.Scale(domain=["Measured", "Projected"],
-                                                                         range=["circle", "diamond"]),
-                                  legend=alt.Legend(orient="top-left")))
+    dots = alt.Chart(pts).mark_point(filled=True, size=50, color=FOCUS, opacity=1).encode(x=x, y=y)
     text = alt.Chart(pts).mark_text(dy=-12, fontSize=12, fontWeight="bold", color=FOCUS_TEXT).encode(
         x=x, y=y, text="label:N")
-    return alt.layer(gap, solid, dashed, dots, text).properties(
-        height=320, title=alt.Title(f"{region}: data centre electricity use, measured 2020 to 2025 and "
+    return alt.layer(line, dots, text).properties(
+        height=360, title=alt.Title(f"{region}: data centre electricity use, measured 2020 to 2025 and "
                                     f"projected to 2030 (TWh)",
-                                    subtitle="Solid = measured. Dashed = projection at the chosen rate. "
-                                             "Dotted = no data for 2021 and 2022"))
+                                    subtitle="Every measured and projected value is labelled in TWh"))
 
 
 # ---------------------------------------------------------------------------
@@ -296,16 +320,18 @@ def render() -> None:
     rep_label = pd.Period(reported["month"]).strftime("%b %Y")
     st.subheader("4. Announced AI data centres would add much more")
     st.markdown(
-        f"Frontier AI data centres in the United States drew {reported['power_gw']:.1f} GW in {rep_label}, "
-        f"and announced projects would raise this to {end_2028['power_gw']:.1f} GW by the end of 2028.")
+        f"Frontier AI data centres in the United States had {reported['power_gw']:.1f} GW of power capacity "
+        f"operating in {rep_label}, and announced projects would raise this to {end_2028['power_gw']:.1f} GW "
+        f"by the end of 2028.")
     c1, c2 = st.columns(2)
-    card(c1, f"Reported power, {rep_label}", f"{reported['power_gw']:.1f} GW",
-         f"{int(reported['sites_drawing_power'])} US sites drawing power")
-    card(c2, "Planned power, end of 2028", f"{end_2028['power_gw']:.1f} GW",
-         f"{end_2028['power_gw'] / reported['power_gw']:.1f} times the power reported in {rep_label}")
+    card(c1, f"Reported power capacity, {rep_label}", f"{reported['power_gw']:.1f} GW",
+         f"{int(reported['sites_drawing_power'])} US sites operating")
+    card(c2, "Planned power capacity, end of 2028", f"{end_2028['power_gw']:.1f} GW",
+         f"{end_2028['power_gw'] / reported['power_gw']:.1f} times the capacity reported in {rep_label}")
     with st.container(border=True):
         st.altair_chart(style(capacity_chart(cap, info["retrieved"])), **fit(st.altair_chart))
-        st.caption("Power of the whole facility, including cooling, for the frontier AI sites Epoch AI tracks. "
+        st.caption("Power capacity of the whole facility, including cooling, for the frontier AI sites Epoch AI "
+                   "tracks. It is the power a site can supply, not its measured electricity use. "
                    "Planned months follow announced dates, which may change. Few projects are announced "
                    "beyond 2028, so the planned line levels off there.")
 
@@ -358,22 +384,6 @@ def render() -> None:
         "so the measured values are an upper limit on AI-driven use.\n"
         "- No data centre share is published for 2021 and 2022.\n"
         "- Announced AI projects may be delayed or cancelled, and the projection assumes a constant growth rate.")
-
-    with st.expander(f"Trace {us_now['dc_twh']:.0f} TWh (US data centre use, {latest_year}) to the source files"):
-        raw_s = pd.read_csv(RAW_SHARE, dtype=str, keep_default_na=False)
-        raw_d = pd.read_csv(RAW_DEMAND, dtype=str, keep_default_na=False)
-        s_val = raw_s[(raw_s["Entity"] == US) & (raw_s["Year"] == str(latest_year))].iloc[0]
-        d_val = raw_d[(raw_d["Entity"] == US) & (raw_d["Year"] == str(latest_year))].iloc[0]
-        share_v, demand_v = s_val.iloc[-1], d_val.iloc[-1]
-        result = float(share_v) / 100 * float(demand_v)
-        st.markdown(
-            f"1. `data/raw/tab3/{RAW_SHARE.name}`, row *Entity* = `{US}`, *Year* = `{latest_year}`: "
-            f"data centre share = `{share_v}` (%), line {s_val.name + 2} of the file.\n"
-            f"2. `data/raw/tab3/{RAW_DEMAND.name}`, row *Entity* = `{US}`, *Year* = `{latest_year}`: "
-            f"electricity demand = `{demand_v}` (TWh), line {d_val.name + 2} of the file.\n"
-            f"3. `{share_v}` ÷ 100 × `{demand_v}` = `{result:.4f}` TWh, rounded to **{result:.0f} TWh**.\n"
-            f"4. The same calculation is step 3 in `src/tab3_prep.py`, and the result is the "
-            f"`dc_twh` column of `data/processed/tab3_dc_use.csv`.")
 
     st.caption(
         f"Sources: IEA, Energy and AI (2025, 2026), and Ember, Yearly Electricity Data (2026), processed by "

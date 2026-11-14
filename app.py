@@ -50,7 +50,7 @@ TABS = [
     ("🏢 2 · Builders and Locations", "tab2_builders", "tile_builders.svg",
      "Is AI data centre capacity concentrated in a few organisations or countries?"),
     ("⚡ 3 · Electricity Demand", "tab3_electricity", "tile_electricity.svg",
-     "What share of electricity do data centres take, and how fast is it rising?"),
+     "What does the expansion cost the US grid, and how large could the load become?"),
     ("📈 4 · Demand Comparison", "tab4_demand", "tile_demand.svg",
      "Is actual AI use growing at the same pace as construction?"),
 ]
