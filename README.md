@@ -104,7 +104,7 @@ streamlit run app.py
 |---|---|
 | Sanika Wankhade | Tab 1; repository, deployment, opening screen and shared theme; data package build and checks; README, data dictionary and documentation |
 | Erkebai (Eric) Bakhavadinov | Tab 2 |
-| Szexuan Yap | Tab 3 |
+| Szexuan Yap | Tab 3; proposed the group question and wrote an initial proposal (four-tab structure and data sources) |
 | Aaron Sapkota | Tab 4 and the opening-screen answer |
 
 ## Assessed version

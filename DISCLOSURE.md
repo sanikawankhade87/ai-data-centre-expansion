@@ -11,7 +11,7 @@
 
 ## AI
 
-- **Tools used:** Claude (Anthropic) was used by members of the group, as recorded in [`PROVENANCE.md`](PROVENANCE.md). *Szexuan and Aaron: add the tools you used, or state that you used none.*
+- **Tools used:** Claude (Anthropic) was used by members of the group, as recorded in [`PROVENANCE.md`](PROVENANCE.md). *Aaron: add the tools you used, or state that you used none.*
 - **What AI was used for:** drafting code for tab pages, data preparation and checks; checking facts about the data; drafting documentation. Each use is a row in the provenance matrix, with what was asked and what came back.
 - **How AI output was checked:** every use names a check that could have failed, such as recomputing a displayed number by hand from the source file, a byte-for-byte rebuild of the processed files, a test that the data dictionary covers every file and column, and a colour vision deficiency simulation. Outputs that failed a check were corrected before use.
 - **What AI was not used for:** AI did not generate, alter or invent any data. Every number in the app comes from the public sources above and can be traced to its source file on screen.
