@@ -420,7 +420,7 @@ def render() -> None:
     with chart_box:
         st.altair_chart(build_chart(windows), width="stretch")
         st.caption(
-            "Hover over either panel to see both index values and the raw numbers for that month. "
+            "Index values are labelled each quarter; every monthly value is listed in 📋 All data used in this tab below. "
             "The panels are separate because the Census Bureau changed its AI question in November 2025 "
             "and collected no data during the October to November 2025 shutdown. The jump from about 10% "
             "to 17% of firms between the two wordings comes from the new definition, so the two AI lines "
@@ -492,6 +492,7 @@ def render() -> None:
     # --- Limits -----------------------------------------------------------------
     with st.expander("⚠️ What this comparison can and cannot tell Dana"):
         st.markdown(
+            "- **Construction spending is not seasonally adjusted.** The revised window runs from November, usually a low month for construction, to August, usually a high one, which favours the build line. The three-month averages in 🧪 Does the answer depend on which months are picked? still show building ahead, so the verdict does not rest on the season alone.\n"
             "- **Construction covers all data centres**, not only AI ones. No public source separates them, "
             "so the build line is an upper bound on AI-driven building.\n"
             "- **Spending is in constant 2021 US dollars** (Our World in Data adjusts the Census figures with "
