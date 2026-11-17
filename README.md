@@ -33,8 +33,9 @@ The same data supports two readings. Construction spending, data centre electric
 1. Open the app and click **🏗️ 1 · Pace of Construction**.
 2. Read the three cards: $5.37bn spent in August 2026 (+66% on August 2025), a 12-month average of $3.83bn a month (4.6 times the November 2022 level), and growth of the 12-month average of +34%, down from +57% a year earlier.
 3. Drag **Show from** to 2022 to zoom in on the years since ChatGPT; switch **12-month average** off and on to compare the raw monthly line with the trend.
-4. Read **What this means for Dana**: spending is still rising fast, but the growth rate has slowed.
-5. Optional: open **🏢 2 · Builders and Locations** to see who is building. Five owners hold 71% of current AI data centre power, so each grid request is a bet on a few companies' plans.
+4. Read the growth chart below it: growth of the 12-month average jumped after ChatGPT, peaked at +72% in the year to August 2024, then eased to +57% and +34%.
+5. Read **What this means for Dana**: spending is still rising fast, but the growth rate has slowed. **⚠️ What this tab can and cannot tell Dana** lists the limits.
+6. Optional: open **🏢 2 · Builders and Locations** to see who is building. Five owners hold 71% of current AI data centre power, so each grid request is a bet on a few companies' plans.
 
 ### 2. How big is the load on the grid?
 **As an** energy policy analyst, **I want** to see how much electricity data centres already use and how large that load could become by 2030, **so that** I can size the grid capacity my state may need to plan for.
@@ -60,12 +61,12 @@ The same data supports two readings. Construction spending, data centre electric
 | Tab | Question it answers | Main chart | Visual Vocabulary family | Owner |
 |---|---|---|---|---|
 | Opening screen | The group question, Dana and the answer | – | – | Shared |
-| 1 · Pace of Construction | How fast is construction spending growing, and is it accelerating? | Line chart, monthly spending with a 12-month average | Change over time | Sanika Wankhade |
+| 1 · Pace of Construction | How fast is construction spending growing, and is it accelerating? | Line chart, monthly spending with a 12-month average; column chart of yearly growth | Change over time | Sanika Wankhade |
 | 2 · Builders and Locations | Is capacity concentrated in a few organisations or countries? | Ranked horizontal bar chart | Ranking | Erkebai (Eric) Bakhavadinov |
 | 3 · Electricity Demand | What does the expansion cost the US grid, and how large could the load become? | Line, bar and ranked bar charts (5) | Change over time, magnitude, ranking | Szexuan Yap |
 | 4 · Demand Comparison | Is actual AI use growing as fast as construction? | Indexed line chart and a gap (deviation) bar chart | Change over time, deviation | Aaron Sapkota |
 
-Nine charts across four Visual Vocabulary families. Every chart has a title or caption saying what it shows, labelled axes with units, and value labels so it can be read without hovering. Each tab states what the data cannot show and shows its sources and last data refresh on screen.
+Ten charts across four Visual Vocabulary families. Every chart has a title or caption saying what it shows, labelled axes with units, and value labels so it can be read without hovering. Each tab states what the data cannot show and shows its sources and last data refresh on screen.
 
 ## Data
 

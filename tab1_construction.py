@@ -32,11 +32,8 @@ CONTEXT = "#A79E97"         # soft warm grey: raw monthly values
 HIGHLIGHT_TEXT = "#A85A0C"  # darker versions for text, readable in a screen recording
 CONTEXT_TEXT = "#766D66"
 
-NEON_CSS = """
+CARD_CSS = """
 <style>
-[data-testid="stMetric"] { transition: box-shadow .25s ease, transform .25s ease, border-color .25s ease; }
-[data-testid="stMetric"]:hover { transform: translateY(-3px); border-color: #5CF2FF !important;
-  box-shadow: 0 0 0 1px #5CF2FF, 0 0 16px rgba(92,242,255,.5), 0 0 30px rgba(255,92,214,.2); }
 [data-testid="stMetricValue"] { color: #C46A10; }
 </style>
 """
@@ -123,8 +120,48 @@ def build_chart(df: pd.DataFrame, show_avg: bool) -> alt.LayerChart:
     )
 
 
+def build_growth_chart(g: pd.DataFrame, end_month: str) -> alt.LayerChart:
+    """Column chart: growth of the 12-month average in each year to the latest month."""
+    g = g.copy()
+    g["year_label"] = g["month"].dt.strftime("%b %Y")
+    g["period"] = g["month"].map(lambda d: "After ChatGPT" if d > CHATGPT else "Before ChatGPT")
+    g["label"] = g["growth_pct"].map(lambda v: f"{v:+.0f}%")
+    order = list(g["year_label"])
+    x = alt.X("year_label:N", sort=order, title=f"Year to {end_month}",
+              axis=alt.Axis(labelAngle=0, labelFontSize=13, titleFontSize=14))
+    y = alt.Y("growth_pct:Q", title="Growth of the 12-month average (%)",
+              scale=alt.Scale(domain=[min(-5.0, float(g["growth_pct"].min()) - 5),
+                                      float(g["growth_pct"].max()) * 1.18]),
+              axis=alt.Axis(labelFontSize=13, titleFontSize=14))
+    color = alt.Color("period:N", legend=None, scale=alt.Scale(
+        domain=["After ChatGPT", "Before ChatGPT"], range=[HIGHLIGHT, CONTEXT]))
+    bars = alt.Chart(g).mark_bar(cornerRadiusTopLeft=3, cornerRadiusTopRight=3).encode(
+        x=x, y=y, color=color,
+        tooltip=[alt.Tooltip("year_label:N", title="Year to"),
+                 alt.Tooltip("growth_pct:Q", title="Growth (%)", format="+.1f")])
+    label_color = alt.condition("datum.period == 'After ChatGPT'",
+                                alt.value(HIGHLIGHT_TEXT), alt.value(CONTEXT_TEXT))
+    up = alt.Chart(g[g["growth_pct"] >= 0]).mark_text(fontSize=13, fontWeight="bold", dy=-9).encode(
+        x=x, y=y, text="label:N", color=label_color)
+    down = alt.Chart(g[g["growth_pct"] < 0]).mark_text(fontSize=13, fontWeight="bold", dy=12).encode(
+        x=x, y=y, text="label:N", color=label_color)
+    labels = up + down
+    zero = alt.Chart(pd.DataFrame({"z": [0]})).mark_rule(color=CONTEXT_TEXT, strokeWidth=1).encode(y="z:Q")
+    peak = g.loc[g["growth_pct"].idxmax()]
+    return (
+        alt.layer(bars, zero, labels)
+        .properties(height=320, padding={"top": 12}, title=alt.Title(
+            f"Growth of the 12-month average in each year to {end_month} (%)",
+            subtitle=f"Amber = years after ChatGPT (Nov 2022); grey = before. Growth peaked at "
+                     f"{peak['growth_pct']:+.0f}% in the year to {peak['year_label']} and has slowed since.",
+            fontSize=15, subtitleFontSize=12, subtitleColor=CONTEXT_TEXT, anchor="start"))
+        .configure_view(strokeWidth=0)
+        .configure(background="transparent")
+    )
+
+
 def render() -> None:
-    st.html(NEON_CSS)
+    st.html(CARD_CSS)
     st.header("🏗️ Pace of Construction")
     st.markdown(
         "**How fast is US data centre construction spending growing, and is the growth accelerating?**"
@@ -171,12 +208,29 @@ def render() -> None:
             "📋 All data used in this tab, and hovering shows any month."
         )
 
+    # --- Is the growth speeding up? -------------------------------------------
+    growth = prep.yearly_growth(df)  # step 3b in src/tab1_prep.py
+    peak = growth.loc[growth["growth_pct"].idxmax()]
+    end_month = latest["month"].strftime("%B")
+    with st.container(border=True):
+        st.altair_chart(build_growth_chart(growth, end_month), width="stretch")
+        st.caption(
+            f"Is the growth speeding up? Each bar is the percentage growth of the 12-month average in a year "
+            f"to {end_month}, {growth['month'].dt.year.min()} to {growth['month'].dt.year.max()}, comparing the "
+            f"same month a year apart so the construction season cancels out. Values are in constant 2021 US$, "
+            f"so price rises are already removed. The last bar is the third card. Growth jumped after ChatGPT "
+            f"and peaked at {peak['growth_pct']:+.0f}% in the year to {peak['month']:%b %Y}; the two years since "
+            f"were lower ({avg_growth_before:+.0f}% and {avg_growth_now:+.0f}%). "
+            f"Spending is still rising each year, just less quickly."
+        )
+
     st.info(
         f"**What this means for Dana:** construction spending is still rising fast. "
         f"{m(latest['month'])} was {same_month_growth:.0f}% above the same month a year earlier, and the "
         f"12-month average is {since_ai:.1f} times its {m(CHATGPT)} level, just before ChatGPT. But the growth *rate* has "
         f"slowed: the 12-month average grew {avg_growth_now:.0f}% in the past year, down from "
-        f"{avg_growth_before:.0f}% the year before. More is being built every month, just not at an "
+        f"{avg_growth_before:.0f}% the year before and {peak['growth_pct']:.0f}% at the peak in the year to "
+        f"{peak['month']:%b %Y}. More is being built every month, just not at an "
         f"ever-faster rate. This covers buildings only (not servers) for all data centres, not only AI.",
         icon="💡",
     )
@@ -217,6 +271,20 @@ def render() -> None:
             f"{latest['avg12_b']:.2f} ÷ {year_ago['avg12_b']:.2f} − 1 = **{avg_growth_now:+.0f}%**. "
             f"The year before: {year_ago['avg12_b']:.2f} ÷ {two_ago['avg12_b']:.2f} − 1 = "
             f"**{avg_growth_before:+.0f}%**."
+        )
+
+    with st.expander("⚠️ What this tab can and cannot tell Dana"):
+        st.markdown(
+            "- **It covers all data centres, not only AI ones.** The Census Bureau does not separate AI, "
+            "so this is an upper bound on AI-driven building.\n"
+            "- **It counts buildings, not servers.** Spending on chips and IT equipment, often the larger "
+            "cost, is not included, so total investment is higher than shown.\n"
+            "- **Spending is not the same as electricity load.** A building adds load only once it is "
+            "fitted out and switched on, usually a year or more after construction. Tab 3 covers the load.\n"
+            "- **Recent months are preliminary.** The Census Bureau revises them, so the last few points "
+            "may move.\n"
+            "- **A slower growth rate is not a fall.** Spending is still higher every year; only the pace "
+            "of increase has eased. Whether that pace matches AI use is tested in Tab 4."
         )
 
     with st.expander("📋 All data used in this tab"):
