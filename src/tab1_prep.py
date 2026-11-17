@@ -123,6 +123,21 @@ def cards(df: pd.DataFrame) -> dict:
     }
 
 
+def yearly_growth(df: pd.DataFrame) -> pd.DataFrame:
+    """Growth of the 12-month average in each year to the latest calendar month (step 3b).
+
+    One row per year ending in the same month as the latest data (for example each August):
+    growth_pct = 12-month average that month / 12-month average a year earlier - 1, x 100.
+    The last row is the third card; the row before it is the card's comparison.
+    """
+    latest = df["month"].iloc[-1]
+    ends = df[(df["month"].dt.month == latest.month) & df["avg12_b"].notna()][["month", "avg12_b"]]
+    ends = ends.reset_index(drop=True)
+    ends["prev_b"] = ends["avg12_b"].shift(1)
+    ends["growth_pct"] = (ends["avg12_b"] / ends["prev_b"] - 1) * 100
+    return ends.dropna(subset=["growth_pct"]).reset_index(drop=True)
+
+
 # ---------------------------------------------------------------------------
 # Step 4: checks
 # ---------------------------------------------------------------------------
@@ -155,6 +170,13 @@ def validate(sample: pd.DataFrame, out: pd.DataFrame) -> list[tuple[str, bool, s
     check("Nov 2022 (ChatGPT) and the month two years before the latest both exist",
           CHATGPT in set(months) and (months.iloc[-1] - pd.DateOffset(years=2)) in set(months),
           "needed for the cards")
+    dated = out.assign(month=months)
+    bars, c = yearly_growth(dated), cards(dated)
+    check("Growth chart: one bar per year, last two bars equal the third card and its comparison",
+          bars["month"].dt.year.is_unique
+          and abs(bars["growth_pct"].iloc[-1] - c["avg_growth_pct"]) < 1e-9
+          and abs(bars["growth_pct"].iloc[-2] - c["avg_growth_prev_pct"]) < 1e-9,
+          f"{len(bars)} bars, latest {bars['growth_pct'].iloc[-1]:+.1f}%")
     return results
 
 
