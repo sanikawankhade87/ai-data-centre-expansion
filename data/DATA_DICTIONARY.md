@@ -1,6 +1,6 @@
 # Data Dictionary: AI Data Centre Expansion
 
-Every dataset the app uses, from the raw download to the file each tab reads. This file covers all four tabs. The tab-level files `DATA_DICTIONARY_tab1.md` and `DATA_DICTIONARY_tab3.md` give extra detail for those tabs.
+Every dataset the app uses, from the raw download to the file each tab reads. This file covers all four tabs. Each tab's guide (`README_tab1.md` to `README_tab4.md` at the top of the repository) summarises its own data, transformations and checks in the same format.
 
 ## Folder layout
 
@@ -62,7 +62,7 @@ Raw files were downloaded between 23 and 25 October 2026 (dates per dataset belo
 ### R5. `data/raw/tab3/epoch_data_center_timelines.csv`
 - **Source:** Epoch AI, *AI data centers*, timelines table. https://epoch.ai/data/data_centers/data_center_timelines.csv
 - **Licence:** CC BY 4.0.
-- **Columns and units (14):** `Data center` (text); `Date` (YYYY-MM-DD); `Construction status`; `Buildings operational`; `IT power (MW)` (servers only); `Power (MW)` (whole facility including cooling); `H100 equivalents`; `Performance (8-bit OP/s)`; capital, compute, construction and annual operating costs (2025 USD billions); and source fields. The app uses `Data center`, `Date`, `IT power (MW)`, `Power (MW)`.
+- **Columns and units (14):** `Data center` (text); `Date` (YYYY-MM-DD); `Construction status`; `Buildings operational`; `IT power (MW)` (servers only); `Power (MW)` (whole facility including cooling); `H100 equivalents`; `Performance (8-bit OP/s)`; capital, compute, construction and annual operating costs (2025 USD billions); `Water use (MGD)`; and `Current H100 equivalents (from Data center)`. The app uses `Data center`, `Date`, `IT power (MW)`, `Power (MW)`.
 - **Primary key:** Data center, Date. **Rows:** 567.
 - **Time coverage:** 18 Dec 2018 to 1 Jan 2030; dates after the download date are planned.
 - **Latest observation:** reported records to 19 Oct 2026; planned to 1 Jan 2030. **Downloaded:** 25 Oct 2026. **Used by:** Tab 3.
@@ -118,8 +118,8 @@ Each sample keeps the source column names and values unchanged. Only the rows an
 | `tab3_us_demand.csv` | Tab 3 | year | `year`; `demand_twh` (TWh); `change_since_2021_pct` (%); `in_flat_period` (true for 2007 to 2021) | 2000 to 2025 | 2025 | `src/tab3_prep.py` step 2: United States rows; change = demand ÷ 2021 demand − 1, × 100 |
 | `tab3_dc_use.csv` | Tab 3 | region, year | `region`; `year`; `share_pct` (%); `demand_twh`, `dc_twh`, `other_twh`, `dc_change_since_2020_twh`, `demand_change_since_2020_twh` (TWh); `dc_share_of_growth_pct` (%, empty in 2020); `share_of_world_dc_pct` (%) | 2020, 2023, 2024, 2025 | 2025 | `src/tab3_prep.py` step 3: join share and demand; `dc_twh` = share ÷ 100 × demand; Rest of world = World − United States − China; share of growth = change in `dc_twh` since 2020 ÷ change in demand × 100 |
 | `tab3_ai_capacity.csv` | Tab 3 | month | `month` (YYYY-MM); `power_mw` (MW); `power_gw` (GW); `sites_drawing_power` (count); `status` (reported or planned) | Jan 2019 to Jan 2030 | Reported Sep 2026 (month end); planned Jan 2030 | `src/tab3_prep.py` step 4: US sites; at each month end each site keeps its latest `Power (MW)` record on or before that date; summed; months after the download date are planned |
-| `tab3_scenarios.csv` | Tab 3 | region, scenario | `region`; `scenario` (trend, latest, construction); `scenario_label`; `dc_growth_pct`, `other_growth_pct` (% per year); `basis` | Rates measured over 2020 to 2025 | 2025 | `src/tab3_prep.py` step 5: trend = (2025 ÷ 2020)^(1/5) − 1; latest = 2025 ÷ 2024 − 1; construction (US only) = the same formula on calendar-year spending totals |
-| `tab3_projection.csv` | Tab 3 | region, scenario, year | `region`; `scenario`; `year`; `dc_twh`, `other_twh`, `total_twh` (TWh); `dc_share_pct` (%); `multiple_of_2025` (ratio) | 2025 to 2030 | Projection | `src/tab3_prep.py` step 6: 2025 values grown each year at the scenario rates. An arithmetic projection, not a forecast |
+| `tab3_scenarios.csv` | Tab 3 | region, scenario | `region`; `scenario` (trend, latest, construction); `scenario_label`; `dc_growth_pct`, `other_growth_pct` (% per year); `basis` | Rates measured over 2020 to 2025 | 2025 | `src/tab3_prep.py` step 5: trend = (2025 ÷ 2020)^(1/5) − 1; latest = 2025 ÷ 2024 − 1; construction (US only) = the same formula on calendar-year spending totals; `other_growth_pct` = the same trend formula on `other_twh` (total demand − data centre use) |
+| `tab3_projection.csv` | Tab 3 | region, scenario, year | `region`; `scenario`; `year`; `dc_twh`, `other_twh`, `total_twh` (TWh); `dc_share_pct` (%); `multiple_of_2025` (ratio) | 2025 to 2030 | Projection | `src/tab3_prep.py` step 6: 2025 values grown each year at the scenario rates: data centre use at `dc_growth_pct` and other demand at `other_growth_pct`. An arithmetic projection, not a forecast |
 | `tab4_ai_monthly.csv` | Tab 4 | window, month | `window` (old or now); `month` (YYYY-MM, the month the reference period ends); `ai` (mean % of US employer businesses using AI); `ai_se` (standard error of the mean, % points: √(sum of se²) ÷ n); `n` (estimates averaged); `periods` (period codes averaged, separated by `;`) | Old: Sep 2023 to Sep 2025. Now: Nov 2025 to Oct 2026 | Oct 2026 (period 202621) | `src/tab4_prep.py` step 2: each two-week estimate is placed in the month its reference period ends; estimates in the same month are averaged. The tab then indexes AI use and construction spending to 100 in the first month of the window the user picks |
 
 ---
