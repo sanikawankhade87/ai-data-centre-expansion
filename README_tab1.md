@@ -1,109 +1,129 @@
 # Tab 1 · Pace of Construction
 
-**Owner:** Sanika Wankhade
-**Sub-question:** How fast is US data centre construction spending growing, and is the growth accelerating?
-**Persona:** Dana Reyes, energy policy analyst (the group persona, as on the front page).
+| | |
+|---|---|
+| **Owner** | Sanika Wankhade |
+| **Sub-question** | How fast is US data centre construction spending growing, and is the growth accelerating? |
+| **Persona** | Dana Reyes, energy policy analyst advising a US state public utilities commission (the group persona, see [README.md](README.md)) |
+| **Short answer for Dana** | Spending is still rising fast ($5.37bn in Aug 2026, +66% on a year earlier), but the growth rate peaked in the year to Aug 2024 and has slowed since |
+| **Charts** | Line chart (change over time); column chart of yearly growth (change over time) |
 
-## Files
+## 1. Files
 
 | File | Purpose |
 |---|---|
 | `tab1_construction.py` | The tab. `app.py` imports it and calls `render()` inside the first tab |
-| `src/tab1_prep.py` | Every transformation, in four commented steps, plus seven checks that can fail |
-| `scripts/download_tab1.py` | Downloads a fresh, unedited copy from Our World in Data to `data/raw/tab1/` and compares it with the shared file |
-| `data/monthly-spending-data-center-us.csv` | Raw OWID download (never edited by hand). Shared with Tabs 3 and 4 so all tabs show the same numbers |
+| `src/tab1_prep.py` | Every transformation, in commented steps, plus eight checks that can fail |
+| `scripts/download_tab1.py` | Downloads a fresh, unedited copy from Our World in Data and compares it with the committed file |
+| `data/monthly-spending-data-center-us.csv` | Raw download, never edited (shared with Tabs 3 and 4 so all tabs show the same numbers) |
 | `data/sample/tab1_construction.csv` | Source sample: the rows and columns Tab 1 uses, values unchanged |
-| `data/processed/tab1_monthly.csv` | Processed file the tab reads, built from the sample by `src/tab1_prep.py`: monthly spending in US$ billions and the 12-month average (also read by Tab 4) |
-| `data/DATA_DICTIONARY_tab1.md` | Every column, unit, formula and check |
+| `data/processed/tab1_monthly.csv` | The file the tab reads (also read by Tab 4) |
 
-## Run it
+## 2. Run it
 
 ```bash
 pip install -r requirements.txt
 python -m src.tab1_prep               # raw file -> sample -> processed file, then the checks
-python -m src.tab1_prep --from-sample # rebuild the processed file from the sample
+python -m src.tab1_prep --from-sample # rebuild the processed file from the sample only
 python -m src.tab1_prep --validate    # checks only
 streamlit run app.py                  # Tab 1 is the first tab
-streamlit run tab1_construction.py    # or preview Tab 1 on its own
 ```
 
-## Data
-
-US Census Bureau, *Value of Construction Put in Place* (private data centre construction), adjusted for inflation with US Bureau of Labor Statistics producer price indexes, processed by Our World in Data.
-https://ourworldindata.org/grapher/monthly-spending-data-center-us
+## 3. Data
 
 | Item | Detail |
 |---|---|
-| Columns | `Entity` (text, always United States); `Code` (USA); `Month` (YYYY-MM); `Data center construction` (constant 2021 US$) |
-| Primary key | Month |
-| Rows | 152 |
+| Source | US Census Bureau, *Value of Construction Put in Place* (private construction, data centres), adjusted to constant 2021 US$ with US Bureau of Labor Statistics producer price indexes, processed by Our World in Data |
+| URL | https://ourworldindata.org/grapher/monthly-spending-data-center-us |
+| Licence | CC BY 4.0 (Our World in Data); underlying US government data is public domain |
+| Columns used | `Entity` (always United States); `Code` (USA); `Month` (YYYY-MM); `Data center construction` (constant 2021 US$) |
+| Primary key | Month (152 rows) |
 | Time coverage | January 2014 to August 2026, every month |
-| Latest observation | August 2026 (OWID update 2 Oct 2026); recent months are preliminary and get revised |
-| Licence | CC BY 4.0 (Our World in Data); US government data |
+| Latest observation | August 2026 (OWID update 2 Oct 2026); recent months are preliminary |
+| Downloaded | 23 Oct 2026 |
 
-- Values are **monthly spending**, not annual rates, and are **not seasonally adjusted**, so they rise and fall with the construction season.
-- The series covers the **buildings only**: materials, labour and contractor costs. It excludes servers and other IT equipment, land and maintenance, so it is only part of total data centre investment.
-- Only privately owned projects are included.
-- It covers **all data centres**. No public source separates AI facilities, so the series is an upper limit on AI-driven construction.
+- Values are **monthly spending**, not annual rates, and are **not seasonally adjusted**.
+- The series covers **buildings only** (materials, labour, contractor costs). It excludes servers and IT equipment, land and maintenance.
+- It covers **all data centres**; no public source separates AI facilities.
 
-## Transformations
+Processed file `data/processed/tab1_monthly.csv`: `month` (YYYY-MM); `csv_line` (line in the raw file); `spend` (constant 2021 US$, as in the source); `spend_b` (US$ billions); `avg12_b` (US$ billions; empty for the first 11 months). Full column detail for every file is in [`data/DATA_DICTIONARY.md`](data/DATA_DICTIONARY.md).
 
-All steps are in `src/tab1_prep.py`. No rows are dropped and no values are imputed. Full column-by-column detail is in `data/DATA_DICTIONARY_tab1.md`.
+## 4. Transformations
+
+All steps are in `src/tab1_prep.py`. No rows are dropped and no values are imputed.
 
 | Step | What it does |
 |---|---|
-| 1 | Read the CSV and keep the United States rows (the only rows in the file) |
-| 2 | Turn `Month` text (e.g. `2026-08`) into a date |
-| 3 | Express spending in billions: value ÷ 1,000,000,000 |
-| 4 | 12-month average = mean of the current month and the 11 before it (first value: December 2014) |
+| 1 | Keep the United States rows and the four source columns, values unchanged → sample |
+| 2 | Spending in billions = value ÷ 1,000,000,000; 12-month average = mean of the month and the 11 before it → processed file |
+| 3 | Card figures (formulas below) |
+| 3b | Growth chart: 12-month average in each August ÷ the same a year earlier − 1, one bar per year (computed on screen, not saved) |
+| 4 | Checks (section 9) |
 
-The cards then use these formulas:
-
-| Card | Formula | Value (Aug 2026) |
+| Card | Formula | Value |
 |---|---|---|
 | Spending in the latest month | Aug 2026 value ÷ 10⁹ | $5.37bn |
 | Change vs the same month a year earlier | Aug 2026 ÷ Aug 2025 − 1 | +66% |
 | 12-month average per month | Mean of Sep 2025 to Aug 2026 | $3.83bn |
 | Multiple of the level before ChatGPT | 12-month average now ÷ 12-month average at Nov 2022 | 4.6× |
-| Growth of the 12-month average, past year | Average now ÷ average a year earlier − 1 | +34% (was +57% the year before) |
+| Growth of the 12-month average | Average now ÷ average a year earlier − 1 | +34% (was +57%) |
 
-Comparing the same month a year apart, and using the 12-month average, both remove the seasonal pattern.
+## 5. Charts and design decisions
 
-## Design decision
+| Chart | Visual task | Why this form | Alternative rejected |
+|---|---|---|---|
+| Line chart: monthly spending (thin grey) with a 12-month average (thick amber) and a marker at ChatGPT's release | See whether spending is growing | The raw data is not seasonally adjusted; the rolling average smooths the seasonal pattern so the trend is visible, while the raw line stays on the chart so nothing is hidden | A bar chart of 152 raw months: the bars jump up and down every month and the noise hides the trend |
+| Column chart: growth of the 12-month average in each year to August (grey before ChatGPT, amber after) | See whether growth is speeding up or slowing down | Answers the "accelerating?" half of the question directly; bars on a shared baseline make the peak and the slowdown easy to compare | Reading the slope of the line chart: changes in slope are hard to judge by eye |
 
-- **Visual task:** see whether monthly spending is growing, and whether that growth is speeding up.
-- **Form chosen:** a line chart of monthly spending (thin grey line) with a 12-month rolling average (thick amber line), and a marker at ChatGPT's release in November 2022.
-- **Alternative rejected:** a bar chart of the raw monthly values.
-- **Why it lost:** the data is not seasonally adjusted, so 152 bars jump up and down every month. That noise hides the trend, and the question is whether growth is accelerating. The rolling average smooths the seasonal pattern so the change in pace is visible, while the raw line stays on the chart so nothing is hidden.
+Every chart has a title, axis titles with units, and value labels, so it can be read without hovering.
 
-## Interaction
+## 6. Interaction
 
-- **Show from** slider: start the chart at any year, to zoom in on the period since 2022.
+- **Show from** slider: start the line chart at any year, for example 2022 to zoom in on the years since ChatGPT.
 - **12-month average** toggle: show or hide the average to compare it with the raw monthly line.
-- **Hover:** shows the monthly value and the 12-month average for any month.
+- **Hover:** shows both values for any month, and the exact growth for any bar.
 
-## What it shows for Dana
+## 7. What it shows for Dana
 
 Spending is still rising fast. August 2026 was 66% above August 2025, and the 12-month average is 4.6 times its level before ChatGPT. But the growth *rate* has slowed: the 12-month average grew 72% in the year to August 2024, 57% to August 2025 and 34% to August 2026. More is being built every month, just not at an ever-faster rate.
 
-## Trace a number (for the recording)
+## 8. Trace a number
 
-1. Open `data/monthly-spending-data-center-us.csv` and find the row United States, `2026-08`: **5371310412**.
+1. Open `data/monthly-spending-data-center-us.csv`, row United States, `2026-08`: **5371310412**.
 2. Divide by 1,000,000,000 and round to two decimals: **$5.37bn**, the first card.
 3. Compare with the `2025-08` row (3228965955): 5371310412 ÷ 3228965955 − 1 = **+66%**.
-4. The "Trace the headline number" expander in the tab shows the same row and every card's calculation on screen.
+4. The **🔍 Trace the headline number** section in the tab shows the same rows and every card's calculation on screen.
 
-## Limits
+## 9. Checks
 
-- Buildings only: the series leaves out servers and chips, often the largest share of AI data centre cost.
-- All data centres, not only AI ones.
-- Not seasonally adjusted, and recent months are preliminary and revised each year.
-- National figures only; data centres cluster in a few states.
+`python -m src.tab1_prep --validate` runs eight checks; the build stops if any fails.
 
-## AI use log
+1. The sample keeps the four source columns.
+2. Every row is United States.
+3. Every month from the first to the last is present once, with no gaps.
+4. No missing or negative spending values.
+5. The latest 12-month average equals a manual mean of the last 12 rows.
+6. The latest card value traces to the source cell (5,371,310,412 ÷ 10⁹ = 5.37).
+7. November 2022 and the month two years before the latest both exist, so every card can be computed.
+8. The growth chart has one bar per year, and its last two bars equal the third card (+34%) and its comparison (+57%).
 
-| What | Tool | How I checked it |
+## 10. Limits
+
+- **All data centres, not only AI ones,** so this is an upper bound on AI-driven building.
+- **Buildings only:** servers and chips, often the larger cost, are not included.
+- **Spending is not electricity load:** a building adds load only once it is fitted out and switched on (Tab 3 covers the load).
+- **Not seasonally adjusted,** and recent months are preliminary and revised.
+- **National totals only;** data centres cluster in a few states.
+- **A slower growth rate is not a fall:** spending is still higher every year.
+
+The same limits are shown in the tab under **⚠️ What this tab can and cannot tell Dana**.
+
+## 11. AI use
+
+Recorded in [PROVENANCE.md](PROVENANCE.md), rows 1 to 7.
+
+| What | Tool | How it was checked |
 |---|---|---|
-| Drafted the tab code (cards, chart, trace panel) | Claude (Anthropic) | Recomputed the cards by hand from the raw CSV: 5371310412 ÷ 10⁹ = 5.37; 5371310412 ÷ 3228965955 − 1 = 0.663; checked the 12-month average against the mean of the last 12 rows |
-| Checked the units and coverage of the data | Claude, using the OWID chart page | Confirmed on the OWID page that the values are monthly, in constant 2021 US$, not seasonally adjusted |
-| _add your own entries_ | | |
+| Drafted the tab code (cards, line chart, trace panel) | Claude (Anthropic) | Recomputed the cards by hand from the raw CSV: 5371310412 ÷ 10⁹ = 5.37; 5371310412 ÷ 3228965955 − 1 = 0.66; checked the 12-month average against the mean of the last 12 rows |
+| Checked the units and coverage of the data | Claude (Anthropic) | Confirmed on the Our World in Data page that the values are monthly, in constant 2021 US$, not seasonally adjusted |
+| Added the yearly growth chart and the limits section | Claude (Anthropic) | Recomputed the peak bar by hand: mean of Sep 2023 to Aug 2024 ($1.82bn) ÷ mean of Sep 2022 to Aug 2023 ($1.06bn) − 1 = +72%; check 8 fails unless the last two bars equal the cards |

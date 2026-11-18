@@ -68,6 +68,8 @@ The same data supports two readings. Construction spending, data centre electric
 
 Ten charts across four Visual Vocabulary families. Every chart has a title or caption saying what it shows, labelled axes with units, and value labels so it can be read without hovering. Each tab states what the data cannot show and shows its sources and last data refresh on screen.
 
+**Tab documentation.** Each tab has its own guide in the same format (files, how to run, data, transformations, design decisions, interaction, what it shows for Dana, a number traced to its source, checks, limits and AI use): [Tab 1](README_tab1.md) · [Tab 2](README_tab2.md) · [Tab 3](README_tab3.md) · [Tab 4](README_tab4.md).
+
 ## Data
 
 All data is public and citable: US Census Bureau (construction spending; Business Trends and Outlook Survey), US Bureau of Labor Statistics, IEA and Ember via Our World in Data, and Epoch AI.
@@ -105,7 +107,7 @@ streamlit run app.py
 |---|---|
 | Sanika Wankhade | Tab 1; repository, deployment, opening screen and shared theme; data package build and checks; README, data dictionary and documentation |
 | Erkebai (Eric) Bakhavadinov | Tab 2 |
-| Szexuan Yap | Tab 3 |
+| Szexuan Yap | Tab 3; proposed the group question and wrote an initial proposal (four-tab structure and data sources) |
 | Aaron Sapkota | Tab 4 and the opening-screen answer |
 
 ## Assessed version
